@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ChealCore.Data;
+using ChealCore.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,9 +10,18 @@ var connectionString = builder.Configuration["ConnectionStrings:ChealCore"];
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = true;
+    options.Lockout.AllowedForNewUsers = true;
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
+    options.Lockout.MaxFailedAccessAttempts = 3;
+    options.User.RequireUniqueEmail = true;
+})
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
@@ -44,31 +54,9 @@ app.Run();
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//using Microsoft.AspNetCore.Identity;
-//using Microsoft.EntityFrameworkCore;
-//using ChealCBA.Data;
-//using ChealCBA.Models;
-//using EmailService;
-
-//var builder = WebApplication.CreateBuilder(args);
-
 //// Add services to the container.
-//var connectionString = builder.Configuration["ConnectionStrings:CBAConnection"];
-//builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
-//builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-//builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
-//{
-//    options.SignIn.RequireConfirmedAccount = true;
-//    options.Lockout.AllowedForNewUsers = true;
-//    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
-//    options.Lockout.MaxFailedAccessAttempts = 3;
-//    options.User.RequireUniqueEmail = true;
-//})
-//    .AddEntityFrameworkStores<ApplicationDbContext>()
-//    .AddDefaultTokenProviders();
-//builder.Services.AddControllersWithViews();
-//builder.Services.AddRazorPages();
+
 
 //// Email Service config
 //var emailConfig = builder.Configuration
