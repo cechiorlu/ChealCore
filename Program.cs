@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ChealCore.Data;
 using ChealCore.Models;
+using EmailService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,15 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     .AddDefaultTokenProviders();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+
+// Email Service config
+var emailConfig = builder.Configuration
+        .GetSection("EmailConfiguration")
+        .Get<EmailConfiguration>();
+builder.Services.AddSingleton(emailConfig);
+builder.Services.AddScoped<IEmailSender, EmailSender>();
+
 
 var app = builder.Build();
 
@@ -75,15 +85,6 @@ app.Run();
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //// Add services to the container.
-
-
-
-//// Email Service config
-//var emailConfig = builder.Configuration
-//        .GetSection("EmailConfiguration")
-//        .Get<EmailConfiguration>();
-//builder.Services.AddSingleton(emailConfig);
-//builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 
 //var app = builder.Build();

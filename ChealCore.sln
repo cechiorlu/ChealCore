@@ -5,6 +5,8 @@ VisualStudioVersion = 25.0.1700.5
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChealCore", "ChealCore.csproj", "{D22DA82D-0EAB-4A42-863C-D8D0D5FF3484}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailService", "..\EmailService\EmailService.csproj", "{DF0EFBE1-F2AD-44B7-81BA-19C3C0DCD519}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{D22DA82D-0EAB-4A42-863C-D8D0D5FF3484}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D22DA82D-0EAB-4A42-863C-D8D0D5FF3484}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D22DA82D-0EAB-4A42-863C-D8D0D5FF3484}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF0EFBE1-F2AD-44B7-81BA-19C3C0DCD519}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF0EFBE1-F2AD-44B7-81BA-19C3C0DCD519}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF0EFBE1-F2AD-44B7-81BA-19C3C0DCD519}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF0EFBE1-F2AD-44B7-81BA-19C3C0DCD519}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

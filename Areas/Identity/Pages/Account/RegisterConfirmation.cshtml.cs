@@ -6,14 +6,14 @@ using System;
 using System.Text;
 using System.Threading.Tasks;
 using ChealCore.Models;
-//using EmailService;
+using EmailService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-//using MimeKit;
-//using MimeKit.Utils;
+using MimeKit;
+using MimeKit.Utils;
 
 namespace ChealCore.Areas.Identity.Pages.Account
 {
@@ -21,12 +21,12 @@ namespace ChealCore.Areas.Identity.Pages.Account
     public class RegisterConfirmationModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        //private readonly IEmailSender _emailSender;
+        private readonly IEmailSender _emailSender;
 
-        public RegisterConfirmationModel(UserManager<ApplicationUser> userManager)
+        public RegisterConfirmationModel(UserManager<ApplicationUser> userManager, IEmailSender emailSender)
         {
             _userManager = userManager;
-            //_emailSender = emailSender;
+            _emailSender = emailSender;
         }
 
         public string Email { get; set; }
@@ -59,9 +59,9 @@ namespace ChealCore.Areas.Identity.Pages.Account
                 values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                 protocol: Request.Scheme);
 
-            //var message = new Message(user.Email, user.FirstName + user.LastName, "Confirm Registration", $"Please confirm your account by <a href={EmailConfirmationUrl}>clicking here</a>.");
-            //_emailSender.SendEmail(message);
-          
+            var message = new Message(user.Email, user.FirstName + user.LastName, "Confirm Registration", $"Please confirm your account by <a href={EmailConfirmationUrl}>clicking here</a>.");
+            _emailSender.SendEmail(message);
+
 
             return Page();
         }
