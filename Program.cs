@@ -12,7 +12,7 @@ var connectionString = builder.Configuration["ConnectionStrings:ChealCore"];
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
     options.SignIn.RequireConfirmedAccount = true;
     options.Lockout.AllowedForNewUsers = true;
@@ -43,7 +43,7 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-        var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
+        var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
         DataInitializer.SeedData(userManager, roleManager);
     }
     catch (Exception ex)

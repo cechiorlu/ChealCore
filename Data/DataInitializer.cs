@@ -7,7 +7,7 @@ namespace ChealCore.Data
 {
     public static class DataInitializer
     {
-        public static void SeedData(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
+        public static void SeedData(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             SeedRoles(roleManager);
             SeedSudoUser(userManager);
@@ -35,30 +35,30 @@ namespace ChealCore.Data
             }
         }
 
-        private static void SeedRoles(RoleManager<ApplicationRole> roleManager)
+        private static void SeedRoles(RoleManager<IdentityRole> roleManager)
         {
             if (!roleManager.RoleExistsAsync(Roles.SuperAdmin.ToString()).Result)
             {
-                ApplicationRole role = new ApplicationRole();
+                IdentityRole role = new IdentityRole();
                 role.Name = Roles.SuperAdmin.ToString();
-                role.IsEnabled = true;
+                //role.IsEnabled = true;
                 IdentityResult roleResult = roleManager.
                 CreateAsync(role).Result;
             }
 
             if (!roleManager.RoleExistsAsync(Roles.Admin.ToString()).Result)
             {
-                ApplicationRole role = new ApplicationRole();
+                IdentityRole role = new IdentityRole();
                 role.Name = Roles.Admin.ToString();
-                role.IsEnabled = true;
+                //role.IsEnabled = true;
                 IdentityResult roleResult = roleManager.CreateAsync(role).Result;
             }
 
             if (!roleManager.RoleExistsAsync(Roles.Basic.ToString()).Result)
             {
-                ApplicationRole role = new ApplicationRole();
+                IdentityRole role = new IdentityRole();
                 role.Name = Roles.Basic.ToString();
-                role.IsEnabled = true;
+                //role.IsEnabled = true;
                 IdentityResult roleResult = roleManager.CreateAsync(role).Result;
             }
 
