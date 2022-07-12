@@ -1,0 +1,47 @@
+﻿@model List<Microsoft.AspNetCore.Identity.IdentityRole>
+@{
+    ViewData["Title"] = "Role Manager";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string[] defaultRoles = { "SUPERADMIN", "ADMIN", "BASIC" };
+}
+
+<div class="container mt-4">
+    <h4>Role Manager</h4>
+    <hr />
+    <form method="post" asp-action="AddRole" asp-controller="RoleManager">
+        <div class="input-group">
+            <input name="roleName" class="form-control w-25">
+            <span class="input-group-btn">
+                <button class="btn btn-primary">
+                    <i class="bi bi-folder-plus px-2"></i>
+                    Add New Role
+                </button>
+            </span>
+        </div>
+    </form>
+    <table class="table table-striped mt-4">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Role</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var role in Model)
+            {
+                <tr>
+                    <td>@role.Id</td>
+                    <td>@role.NormalizedName</td>
+                    @if (!defaultRoles.Any(s => s == role.NormalizedName))
+                    {
+                        <td>edit</td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

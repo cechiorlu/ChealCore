@@ -1,27 +1,64 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
-
-<ul class="navbar-nav">
-@if (SignInManager.IsSignedIn(User))
-{
-    <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
-    </li>
-    <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-        </form>
-    </li>
+@{
+    var applicationUser = UserManager.GetUserAsync(User).Result;
 }
-else
-{
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
-}
+<ul class="navbar-nav flex">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <div class="dropdown">
+            @if (applicationUser.ProfilePicture != null)
+            {
+                <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="data:image/*;base64,@(Convert.ToBase64String(applicationUser.ProfilePicture))"
+                     type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" class="rounded-circle" />
+            }
+            else
+            {
+                <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src=""
+                     type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" class="rounded-circle" />
+            }
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                <li class="dropdown-item">
+                    <div class="row">
+                        @if (applicationUser.ProfilePicture != null)
+                        {
+                            <img style="width:45px;height:45px; object-fit:cover; border-radius:50%" src="data:image/*;base64,@(Convert.ToBase64String(applicationUser.ProfilePicture))"
+                                 class="rounded-circle col" />
+                        }
+                        else
+                        {
+                            <img style="width:45px;height:45px; object-fit:cover; border-radius:50%" src="" class="rounded-circle col" />
+                        }
+                        <div>
+                            <p>@applicationUser.FirstName @applicationUser.LastName</p>
+                            <p>@applicationUser.Email</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="dropdown-item">
+                    <a class="" asp-area="Identity" asp-page="/Account/Manage/Index" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                        <span class="pe-3">Manage account</span>
+                        <i class="bi bi-person-bounding-box"></i>
+                    </a>
+                </li>
+                <hr />
+                <li class="dropdown-item">
+                    <a class="" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                        <span class="pe-3">Sign out</span>
+                        <i class="bi bi-box-arrow-right"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    }
+    else
+    {
+        @*<li class="nav-item">
+                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">Register</a>
+            </li>*@
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">Login</a>
+        </li>
+    }
 </ul>
-

@@ -1,4 +1,20 @@
 ﻿@{
     Layout = "_Layout";
+
+
+    @*string CurrentReq = Convert.ToString(Context.Request.HttpContext.Request.RouteValues["Controller"]);*@
+    @*string CurrentPath = Convert.ToString(Context.Request.HttpContext.Request.PathBase);*@
+
+    @*dynamic Layout;*@
+    @*switch (CurrentReq)
+    {
+        case "User":
+            Layout = "~/Views/Shared/_Layout.cshtml";
+            break;
+        default:
+            //Admin layout  
+            Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+            break;
+    }*@
 }
 
