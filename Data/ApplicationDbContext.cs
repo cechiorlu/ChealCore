@@ -20,7 +20,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         {
             entity.ToTable(name: "User");
         });
-        builder.Entity<IdentityRole>(entity =>
+        builder.Entity<ApplicationRole>(entity =>
         {
             entity.ToTable(name: "Role");
         });

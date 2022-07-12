@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ChealCore.Data;
 using ChealCore.Models;
 using EmailService;
+using System.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +12,7 @@ var connectionString = builder.Configuration["ConnectionStrings:ChealCore"];
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
 {
     options.SignIn.RequireConfirmedAccount = true;
     options.Lockout.AllowedForNewUsers = true;
@@ -38,20 +39,16 @@ var app = builder.Build();
 //  check db for default user/roles. Else, seed required user/roles.
 using (var scope = app.Services.CreateScope())
 {
-    var services = scope.ServiceProvider;
-    var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+    var serviceProvider = scope.ServiceProvider;
     try
     {
-        var context = services.GetRequiredService<ApplicationDbContext>();
-        var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-        var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-        //await ContextSeed.SeedRolesAsync(userManager, roleManager);
-        //await ContextSeed.SeedSuperAdminAsync(userManager, roleManager);
+        var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+        var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
+        DataInitializer.SeedData(userManager, roleManager);
     }
     catch (Exception ex)
     {
-        var logger = loggerFactory.CreateLogger<Program>();
-        logger.LogError(ex, "An error occurred seeding the DB.");
+        Debug.WriteLine(ex.Message);
     }
 }
 
@@ -81,57 +78,3 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//// Add services to the container.
-
-
-//var app = builder.Build();
-
-////  check db for default user/roles. Else, seed required user/roles.
-//using (var scope = app.Services.CreateScope())
-//{
-//    var services = scope.ServiceProvider;
-//    var loggerFactory = services.GetRequiredService<ILoggerFactory>();
-//    try
-//    {
-//        var context = services.GetRequiredService<ApplicationDbContext>();
-//        var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-//        var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-//        await ContextSeed.SeedRolesAsync(userManager, roleManager);
-//        await ContextSeed.SeedSuperAdminAsync(userManager, roleManager);
-//    }
-//    catch (Exception ex)
-//    {
-//        var logger = loggerFactory.CreateLogger<Program>();
-//        logger.LogError(ex, "An error occurred seeding the DB.");
-//    }
-//}
-
-//// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseMigrationsEndPoint();
-//}
-//else
-//{
-//    app.UseExceptionHandler("/Home/Error");
-//    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-//    app.UseHsts();
-//}
-
-//app.UseHttpsRedirection();
-//app.UseStaticFiles();
-
-//app.UseRouting();
-
-//app.UseAuthentication();
-//app.UseAuthorization();
-
-//app.MapControllerRoute(
-//    name: "default",
-//    pattern: "{controller=Home}/{action=Index}/{id?}");
-//app.MapRazorPages();
-
-//app.Run();
