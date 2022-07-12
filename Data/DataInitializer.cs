@@ -2,6 +2,7 @@
 using ChealCore.Models;
 using Microsoft.AspNetCore.Identity;
 using ChealCore.Enums;
+using System.Net;
 
 namespace ChealCore.Data
 {
@@ -23,6 +24,7 @@ namespace ChealCore.Data
                 user.FirstName = "Chimzi";
                 user.LastName = "Chiorlu";
                 user.EmailConfirmed = true;
+                user.ProfilePicture = GenerateByteArray();
 
                 IdentityResult result = userManager.CreateAsync(user, "P@ssw0rd1!").Result;
 
@@ -64,6 +66,24 @@ namespace ChealCore.Data
 
         }
 
+
+
+        public static byte[] GenerateByteArray()
+        {
+            using (WebClient webClient = new WebClient())
+            {
+                try
+                {
+                    byte[] profilePicture = webClient.DownloadData("https://fakeimg.pl/250x250/?retina=1&text=CC&font=noto");
+                    return profilePicture;
+                }
+                catch
+                {
+                    throw new InvalidOperationException($"Can't create placeholder image for new user '{nameof(ApplicationUser)}'");
+                }
+            }
+
+        }
 
     }
 }
