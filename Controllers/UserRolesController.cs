@@ -51,23 +51,23 @@ namespace ChealCore.Controllers
             }
             ViewBag.UserName = user.UserName;
             var model = new List<ManageUserRolesViewModel>();
-            foreach (var role in _roleManager.Roles)
-            {
-                var userRolesViewModel = new ManageUserRolesViewModel
-                {
-                    RoleId = role.Id,
-                    RoleName = role.Name
-                };
-                if (await _userManager.IsInRoleAsync(user, role.Name))
-                {
-                    userRolesViewModel.Selected = true;
-                }
-                else
-                {
-                    userRolesViewModel.Selected = false;
-                }
-                model.Add(userRolesViewModel);
-            }
+            //foreach (var role in _roleManager.Roles)
+            //{
+            //    var userRolesViewModel = new ManageUserRolesViewModel
+            //    {
+            //        RoleId = role.Id,
+            //        RoleName = role.Name
+            //    };
+            //    if (await _userManager.IsInRoleAsync(user, role.Name))
+            //    {
+            //        userRolesViewModel.Selected = true;
+            //    }
+            //    else
+            //    {
+            //        userRolesViewModel.Selected = false;
+            //    }
+            //    model.Add(userRolesViewModel);
+            //}
             return View(model);
         }
 

@@ -34,7 +34,13 @@
                     <td>@role.NormalizedName</td>
                     @if (!defaultRoles.Any(s => s == role.NormalizedName))
                     {
-                        <td>edit</td>
+
+                        <td>
+                            <a class="" asp-area="" asp-controller="RoleManager" asp-action="Manage" asp-route-id="@role.Id">
+                                Manage
+                            </a>
+                        </td>
+
                     }
                     else
                     {
