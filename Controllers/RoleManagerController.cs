@@ -66,7 +66,7 @@ namespace ChealCore.Controllers
         // POST: /RoleManager/Edit/role.ID
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, ManageUserRolesViewModel model)
+        public async Task<IActionResult> Edit(ManageUserRolesViewModel model)
         {
             var role = await _roleManager.FindByIdAsync(model.Id);
 
@@ -98,23 +98,35 @@ namespace ChealCore.Controllers
 
 
         // POST: /RoleManager/Delete/role.ID
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(string id)
-        //{
-        //    if (_context.ApplicationRole == null)
-        //    {
-        //        return Problem("Entity set 'ApplicationDbContext.ApplicationRole'  is null.");
-        //    }
-        //    var applicationRole = await _context.ApplicationRole.FindAsync(id);
-        //    if (applicationRole != null)
-        //    {
-        //        _context.ApplicationRole.Remove(applicationRole);
-        //    }
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(ManageUserRolesViewModel model)
+        {
+            var role = await _roleManager.FindByIdAsync(model.Id);
 
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
+            if (role == null)
+            {
+                ViewBag.ErrorMessage = $"Role with Id = {model.Id} cannot be found";
+                return View("NotFound");
+            }
+            else
+            {
+                // Update the Role using UpdateAsync
+                var result = await _roleManager.DeleteAsync(role);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+                return View(model);
+            }
+        }
 
         //// GET: /RoleManager/DeleteRole/role.ID
         //[Authorize]
