@@ -1,35 +1,49 @@
-﻿@*@model List<ChealCore.Models.ViewModels.UserRolesViewModel>*@
+﻿@model List<ChealCore.Models.ViewModels.UserRolesViewModel>
 
 @{
     var userId = ViewBag.userId;
 }
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "User Manager";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1>User Roles</h1>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Roles</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        @*@foreach (var user in Model)
-        {
+
+
+
+<div class="container mt-4">
+    <h4>User Manager</h4>
+    <hr />
+    <div class="input-group">
+        <span class="input-group-btn">
+            <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@Url.Action("Index", "UserManager", new { area = "" })">
+                <i class="bi bi-folder-plus px-2"></i>
+                Add New User
+            </a>
+        </span>
+    </div>
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <td>@user.FirstName</td>
-                <td>@user.LastName</td>
-                <td>@user.Email</td>
-                <td>@string.Join(" , ", user.Roles.ToList())</td>
-                <td>
-                    <a class="btn btn-primary" asp-controller="UserManager" asp-action="EditUser" asp-route-userId="@user.UserId">Manage Roles</a>
-                </td>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Roles</th>
+                <th>Action</th>
             </tr>
-        }*@
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.FirstName</td>
+                    <td>@user.LastName</td>
+                    <td>@user.Email</td>
+                    <td>@string.Join(" , ", user.Roles.ToList())</td>
+                    <td>
+                        <a class="btn btn-primary" asp-controller="UserManager" asp-action="EditUser" asp-route-userId="@user.UserId">Manage Roles</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

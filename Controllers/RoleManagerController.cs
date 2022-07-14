@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Security.Claims;
 using ChealCore.Models;
 using ChealCore.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -52,7 +53,7 @@ namespace ChealCore.Controllers
                 return NotFound();
             }
 
-            IdentityRole role = await _roleManager.Roles.FirstOrDefaultAsync(r => r.Id == id);
+            var role = await _roleManager.Roles.FirstOrDefaultAsync(r => r.Id == id);
 
             if (role == null)
             {
@@ -128,25 +129,96 @@ namespace ChealCore.Controllers
             }
         }
 
-        //// GET: /RoleManager/DeleteRole/role.ID
-        //[Authorize]
-        //public async Task<IActionResult> DeleteRole(string id)
-        //{
-        //    if (id == null || _roleManager.Roles == null)
-        //    {
-        //        return NotFound();
-        //    }
 
-        //    IdentityRole role = await _roleManager.Roles.FirstOrDefaultAsync(r => r.Id == id);
+
+        //////
+        ///
+
+        //[HttpGet]
+        //public async Task<IActionResult> ManageRoleClaims(string roleId)
+        //{
+        //    //ViewBag.RoleId = roleId;    
+
+        //    var role = await _roleManager.FindByIdAsync(roleId);
+
+
         //    if (role == null)
         //    {
-        //        return NotFound();
+        //        ViewBag.ErrorMessage = $"Role with Id = {roleId} cannot be found";
+        //        return View("NotFound");
         //    }
 
-        //    return View();
+        //    var existingRoleClaims = await _roleManager.GetClaimsAsync(role);
+
+        //    var model = new RoleClaimViewModel
+        //    {
+        //        RoleId = roleId
+        //    };
+
+        //    //var data = claimsstore.allclaims;
+        //    //var data_ = _context.Claims.ToListAsync();
+
+        //    foreach (Claim claim in ClaimsStore.GetClaims(_context))
+        //    {
+        //        RoleClaims roleClaims = new RoleClaims
+        //        {
+        //            ClaimType = claim.Type
+        //        };
+
+        //        if (existingRoleClaims.Any(c => c.Type == claim.Type))
+        //        {
+        //            roleClaims.IsSelected = true;
+        //        }
+        //        model.Claims.Add(roleClaims);
+        //    }
+        //    return View(model);
         //}
 
-        //// POST: ApplicationRoles/Delete/5
+        //[HttpPost]
+        //public async Task<IActionResult> ManageRoleClaims(RoleClaimViewModel model, string roleId)
+        //{
+        //    var role = await roleManager.FindByIdAsync(roleId);
+
+        //    if (role == null)
+        //    {
+        //        ViewBag.ErrorMessage = $"User with Id = {roleId} cannot be found";
+        //        return View("NotFound");
+        //    }
+
+        //    // Get all the user existing claims and delete them
+        //    var claims = await roleManager.GetClaimsAsync(role);
+
+        //    foreach (var claim in claims)
+        //    {
+        //        var result = await roleManager.RemoveClaimAsync(role, claim);
+        //        if (!result.Succeeded)
+        //        {
+        //            ModelState.AddModelError("", "Cannot remove user existing claims");
+        //            return View(model);
+        //        }
+
+
+        //    }
+        //    var data_ = model.Claims.Where(c => c.IsSelected).Select(c => new Claim(c.ClaimType, c.ClaimType));
+
+        //    foreach (var data in data_)
+        //    {
+        //        var result_ = await roleManager.AddClaimAsync(role, data);
+
+        //        if (!result_.Succeeded)
+        //        {
+        //            ModelState.AddModelError("", "Cannot add selected claims to user");
+        //            return View(model);
+        //        }
+        //    }
+        //    return RedirectToAction("EditRole", new { Id = model.RoleId });
+
+
+        //}
+        //////
+
+
+
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

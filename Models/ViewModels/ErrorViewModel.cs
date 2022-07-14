@@ -1,4 +1,4 @@
-﻿namespace ChealCore.Models;
+﻿namespace ChealCore.Models.ViewModels;
 
 public class ErrorViewModel
 {

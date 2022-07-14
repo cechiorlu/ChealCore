@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using ChealCore.Models;
+using ChealCore.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 
 namespace ChealCore.Controllers;
