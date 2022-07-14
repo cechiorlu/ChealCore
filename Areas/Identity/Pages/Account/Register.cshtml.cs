@@ -112,7 +112,7 @@ namespace ChealCore.Areas.Identity.Pages.Account
                 {
                     try
                     {
-                        byte[] profilePicture = webClient.DownloadData($"https://fakeimg.pl/250x250/?text={initials}&font=lobster");
+                        byte[] profilePicture = webClient.DownloadData($"https://fakeimg.pl/250x250/?retina=1&text={initials}&font=noto");
                         user.ProfilePicture = profilePicture;
                     }
                     catch
