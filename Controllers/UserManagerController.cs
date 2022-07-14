@@ -20,63 +20,53 @@ namespace ChealCore.Controllers
             _roleManager = roleManager;
         }
 
+        // GET: /UserManager
+        // list all users
         public async Task<IActionResult> Index()
         {
-            var users = await _userManager.Users.ToListAsync();
-            var userRolesViewModel = new List<UserRolesViewModel>();
-            foreach (ApplicationUser user in users)
-            {
-                var thisViewModel = new UserRolesViewModel();
-                thisViewModel.UserId = user.Id;
-                thisViewModel.Email = user.Email;
-                thisViewModel.FirstName = user.FirstName;
-                thisViewModel.LastName = user.LastName;
-                thisViewModel.PhoneNumber = user.PhoneNumber;
-                thisViewModel.Roles = await GetUserRoles(user);
-                userRolesViewModel.Add(thisViewModel);
-            }
-            return View(userRolesViewModel);
+            var users = _userManager.Users;
+            return View(users);
         }
 
-        private async Task<List<string>> GetUserRoles(ApplicationUser user)
-        {
-            return new List<string>(await _userManager.GetRolesAsync(user));
-        }
-
+        // GET: /UserManager/Manage
         [HttpGet]
-        public async Task<IActionResult> EditUser(string UserId)
+        public async Task<IActionResult> Manage(string id)
         {
-            var user = await _userManager.FindByIdAsync(UserId);
+            var user = await _userManager.FindByIdAsync(id);
 
             if (user == null)
             {
-                ViewBag.ErrorMessage = $"User with Id = {UserId} cannot be found";
+                ViewBag.ErrorMessage = $"User with Id = {id} cannot be found";
                 return View("NotFound");
             }
+
+            var userClaims = await _userManager.GetClaimsAsync(user);
             var userRoles = await _userManager.GetRolesAsync(user);
 
-            var model = new UserRolesViewModel
+            var model = new ManageUserViewModel
             {
-                UserId = user.Id,
+                Id = user.Id,
                 Email = user.Email,
                 UserName = user.UserName,
                 PhoneNumber = user.PhoneNumber,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
+                Claims = userClaims.Select(c => c.Value).ToList(),
                 Roles = userRoles
             };
 
             return View(model);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> EditUser(UserRolesViewModel model)
-        {
-            var user = await _userManager.FindByIdAsync(model.UserId);
 
-            if(user == null)
+        [HttpPost]
+        public async Task<IActionResult> Manage(ManageUserViewModel model)
+        {
+            var user = await _userManager.FindByIdAsync(model.Id);
+
+            if (user == null)
             {
-                ViewBag.ErrorMessage = $"User with Id = {model.UserId} cannot be found";
+                ViewBag.ErrorMessage = $"User with Id = {model.Id} cannot be found";
                 return View("NotFound");
             }
             else
@@ -84,12 +74,12 @@ namespace ChealCore.Controllers
                 user.Email = model.Email;
                 user.UserName = model.UserName;
                 user.PhoneNumber = model.PhoneNumber;
-                user.FirstName = model.FirstName;
                 user.LastName = model.LastName;
+                user.FirstName = model.FirstName;
 
                 var result = await _userManager.UpdateAsync(user);
 
-                if(result.Succeeded)
+                if (result.Succeeded)
                 {
                     return RedirectToAction("Index");
                 }
@@ -106,29 +96,3 @@ namespace ChealCore.Controllers
     }
 }
 
-
-  
-
-        //[HttpPost]
-        //public async Task<IActionResult> Manage(List<ManageUserRolesViewModel> model, string userId)
-        //{
-        //    var user = await _userManager.FindByIdAsync(userId);
-        //    if (user == null)
-        //    {
-        //        return View();
-        //    }
-        //    var roles = await _userManager.GetRolesAsync(user);
-        //    var result = await _userManager.RemoveFromRolesAsync(user, roles);
-        //    if (!result.Succeeded)
-        //    {
-        //        ModelState.AddModelError("", "Cannot remove user existing roles");
-        //        return View(model);
-        //    }
-        //    result = await _userManager.AddToRolesAsync(user, model.Where(x => x.Selected).Select(y => y.RoleName));
-        //    if (!result.Succeeded)
-        //    {
-        //        ModelState.AddModelError("", "Cannot add selected roles to user");
-        //        return View(model);
-        //    }
-        //    return RedirectToAction("Index");
-        //}

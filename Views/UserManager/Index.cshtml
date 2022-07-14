@@ -1,49 +1,79 @@
-﻿@model List<ChealCore.Models.ViewModels.UserRolesViewModel>
+﻿@*@model List<ChealCore.Models.ViewModels.UserRolesViewModel>
+
+    @{
+        var userId = ViewBag.userId;
+    }
+    @{
+        ViewData["Title"] = "User Manager";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+
+
+    <div class="container mt-4">
+        <h4>User Manager</h4>
+        <hr />
+        <div class="input-group">
+            <span class="input-group-btn">
+                <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@Url.Action("Index", "UserManager", new { area = "" })">
+                    <i class="bi bi-folder-plus px-2"></i>
+                    Add New User
+                </a>
+            </span>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Roles</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.FirstName</td>
+                        <td>@user.LastName</td>
+                        <td>@user.Email</td>
+                        <td>@string.Join(" , ", user.Roles.ToList())</td>
+                        <td>
+                            <a class="btn btn-primary" asp-controller="UserManager" asp-action="EditUser" asp-route-userId="@user.UserId">Manage Roles</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>*@
+
+@model IEnumerable<ApplicationUser>
 
 @{
-    var userId = ViewBag.userId;
+    ViewBag.Title = "All Users";
 }
-@{
-    ViewData["Title"] = "User Manager";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-
 
 <div class="container mt-4">
-    <h4>User Manager</h4>
+    <h4>All Users</h4>
     <hr />
-    <div class="input-group">
-        <span class="input-group-btn">
-            <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@Url.Action("Index", "UserManager", new { area = "" })">
-                <i class="bi bi-folder-plus px-2"></i>
-                Add New User
-            </a>
-        </span>
-    </div>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>Roles</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var user in Model)
-            {
-                <tr>
-                    <td>@user.FirstName</td>
-                    <td>@user.LastName</td>
-                    <td>@user.Email</td>
-                    <td>@string.Join(" , ", user.Roles.ToList())</td>
-                    <td>
-                        <a class="btn btn-primary" asp-controller="UserManager" asp-action="EditUser" asp-route-userId="@user.UserId">Manage Roles</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+
+    <a class="btn btn-primary mb-3" style="width:auto" asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@Url.Action("Index", "UserManager", new { area = "" })">
+        Add new user
+    </a>
+
+    @foreach (var user in Model)
+    {
+        <div class="card mb-3">
+            <div class="card-header">
+                User Id : @user.Id
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">@user.UserName</h5>
+            </div>
+            <div class="card-footer">
+                <a aasp-controller="UserManager" asp-action="Manage" asp-route-id="@user.Id" class="btn btn-danger">Manage</a>
+            </div>
+        </div>
+    }
 </div>
