@@ -4,8 +4,10 @@
     ViewData["Title"] = "Manage roles";
 }
 
-<div class="container mt-5">
-
+<div class="container">
+    <div class="my-3"> 
+        <a asp-action="Index" class="nav-link active px-0"><i class="bi bi-arrow-left"></i> Back</a>
+    </div>
     <h4>ApplicationRole</h4>
     <hr />
     <form asp-action="Delete" asp-controller="RoleManager" class="mt-2 col">
@@ -49,10 +51,6 @@
             </div>
         </div>
 
-    </div>
-
-    <div>
-        <a asp-action="Index">Back to List</a>
     </div>
 </div>
 

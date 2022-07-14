@@ -105,7 +105,7 @@ namespace ChealCore.Areas.Identity.Pages.Account
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
                 user.UserName = userName;
-                var initials = string.Join(Input.FirstName[0], Input.LastName[0]);
+                string initials = user.FirstName[0].ToString() + user.LastName[0].ToString();
 
                 // create placeholder profile image
                 using (WebClient webClient = new WebClient())

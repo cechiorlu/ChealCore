@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using ChealCore.Models;
 using ChealCore.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -76,6 +77,21 @@ namespace ChealCore.Controllers
                 user.PhoneNumber = model.PhoneNumber;
                 user.LastName = model.LastName;
                 user.FirstName = model.FirstName;
+                string initials = user.FirstName[0].ToString() + user.LastName[0].ToString();
+
+                // update placeholder profile image
+                using (WebClient webClient = new WebClient())
+                {
+                    try
+                    {
+                        byte[] profilePicture = webClient.DownloadData($"https://fakeimg.pl/250x250/?retina=1&text={initials}&font=noto");
+                        user.ProfilePicture = profilePicture;
+                    }
+                    catch
+                    {
+                        throw new InvalidOperationException($"Can't create placeholder image for new user '{nameof(ApplicationUser)}'");
+                    }
+                }
 
                 var result = await _userManager.UpdateAsync(user);
 
