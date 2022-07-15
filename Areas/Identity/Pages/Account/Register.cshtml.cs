@@ -73,16 +73,16 @@ namespace ChealCore.Areas.Identity.Pages.Account
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
-            [DataType(DataType.Password)]
-            [Display(Name = "Password")]
-            public string Password { get; set; }
+            //[Required]
+            //[StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            //[DataType(DataType.Password)]
+            //[Display(Name = "Password")]
+            //public string Password { get; set; }
 
-            [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "Passwords do not match.")]
-            public string ConfirmPassword { get; set; }
+            //[DataType(DataType.Password)]
+            //[Display(Name = "Confirm password")]
+            //[Compare("Password", ErrorMessage = "Passwords do not match.")]
+            //public string ConfirmPassword { get; set; }
         }
 
 
@@ -107,6 +107,7 @@ namespace ChealCore.Areas.Identity.Pages.Account
                 user.LastName = Input.LastName;
                 user.UserName = userName;
                 string initials = user.FirstName[0].ToString() + user.LastName[0].ToString();
+                string generatedPassword = CreateRandomPassword();
 
                 // create placeholder profile image
                 using (WebClient webClient = new WebClient())
@@ -124,7 +125,7 @@ namespace ChealCore.Areas.Identity.Pages.Account
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-                var result = await _userManager.CreateAsync(user, Input.Password);
+                var result = await _userManager.CreateAsync(user, generatedPassword);
 
                 if (result.Succeeded)
                 {
@@ -135,7 +136,7 @@ namespace ChealCore.Areas.Identity.Pages.Account
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl, password = Input.Password });
+                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl, password = generatedPassword });
                     }
                     else
                     {
@@ -174,6 +175,23 @@ namespace ChealCore.Areas.Identity.Pages.Account
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
             return (IUserEmailStore<ApplicationUser>)_userStore;
+        }
+
+        private string CreateRandomPassword()
+        {
+            try
+            {
+                byte[] result = new byte[8];
+                for (int index = 0; index < 8; index++)
+                {
+                    result[index] = (byte)new Random().Next(33, 126);
+                }
+                return Encoding.ASCII.GetString(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
         }
     }
 }
