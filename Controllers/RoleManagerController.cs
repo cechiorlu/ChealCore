@@ -65,7 +65,7 @@ namespace ChealCore.Controllers
 
 
         // POST: /RoleManager/Edit/role.ID
-        [HttpPost, ActionName("Edit")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(ManageUserRolesViewModel model)
         {
@@ -99,7 +99,7 @@ namespace ChealCore.Controllers
 
 
         // POST: /RoleManager/Delete/role.ID
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(ManageUserRolesViewModel model)
         {

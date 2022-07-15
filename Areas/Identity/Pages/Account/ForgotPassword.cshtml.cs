@@ -72,7 +72,7 @@ namespace ChealCore.Areas.Identity.Pages.Account
                     protocol: Request.Scheme);
 
 
-                var message = new Message(user.Email, user.FirstName + user.LastName, "Reset Password", $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                var message = new Message(user.Email, user.FirstName + ' ' + user.LastName, "Reset Password", $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
                 _emailSender.SendEmail(message);
 
                 return RedirectToPage("./ForgotPasswordConfirmation");

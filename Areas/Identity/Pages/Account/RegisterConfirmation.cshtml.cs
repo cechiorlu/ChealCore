@@ -59,7 +59,7 @@ namespace ChealCore.Areas.Identity.Pages.Account
                 values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                 protocol: Request.Scheme);
 
-            var message = new Message(user.Email, user.FirstName + user.LastName, "Confirm Registration", $"Please confirm your account by <a href={EmailConfirmationUrl}>clicking here</a>.");
+            var message = new Message(user.Email, user.FirstName + ' ' + user.LastName, "Confirm Registration", $"Please confirm your account by <a href={EmailConfirmationUrl}>clicking here</a>.");
             _emailSender.SendEmail(message);
 
 

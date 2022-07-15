@@ -23,7 +23,8 @@ namespace ChealCore.Controllers
 
         // GET: /UserManager
         // list all users
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public IActionResult Index()
         {
             var users = _userManager.Users;
             return View(users);
@@ -60,6 +61,7 @@ namespace ChealCore.Controllers
         }
 
 
+        // POST: /UserManager/Manage
         [HttpPost]
         public async Task<IActionResult> Manage(ManageUserViewModel model)
         {
@@ -108,6 +110,37 @@ namespace ChealCore.Controllers
                 return View(model);
             }
         }
+
+
+        // POST: /UserManager/Delete/user.Id
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with Id = {id} cannot be found";
+                return View("NotFound");
+            }
+            else
+            {
+                var result = await _userManager.DeleteAsync(user);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+                return View("Index");
+            }
+        }
+
 
     }
 }
