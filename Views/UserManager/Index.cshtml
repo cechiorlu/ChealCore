@@ -12,21 +12,25 @@
         Add new user
     </a>
 
-    @foreach (var user in Model)
-    {
-        <div class="card mb-3">
-            <div class="card-header">
-                User Id : @user.Id
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">@user.UserName</h5>
-            </div>
-            <div class="card-footer">
-                @if (user.Email != "cchimzi@appzonegroup.com")
-                {
-                    <a aasp-controller="UserManager" asp-action="Manage" asp-route-id="@user.Id" class="btn btn-danger">Manage</a>
-                }
-            </div>
-        </div>
-    }
+    <div class="row">
+        @foreach (var user in Model)
+        {
+            @if (user.Email != "cchimzi@appzonegroup.com")
+            {
+                <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
+                    <div class="card bg-light mb-3 rounded" data-ripple-color="light">
+                        <div class="card-header">
+                            User Id : @user.Id
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">@user.UserName</h5>
+                        </div>
+                        <div class="card-footer">
+                            <a aasp-controller="UserManager" asp-action="Manage" asp-route-id="@user.Id" class="btn btn-danger">Manage</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
 </div>

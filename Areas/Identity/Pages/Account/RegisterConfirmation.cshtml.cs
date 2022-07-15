@@ -65,7 +65,6 @@ namespace ChealCore.Areas.Identity.Pages.Account
                 $"<p>Please confirm your account by <a href={EmailConfirmationUrl}>clicking here</a>.<p>");
             _emailSender.SendEmail(message);
 
-
             return Page();
         }
     }
