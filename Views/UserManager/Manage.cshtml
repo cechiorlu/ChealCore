@@ -109,7 +109,15 @@
             </div>
         </div>
     </form>
-    <button class="btn btn-danger mt-3" id="delete-user-trigger">Delete</button>
+
+    <div class="form-group row mt-3">
+        <div class="col-sm-10">
+            <button class="btn btn-danger" id="delete-user-trigger">Delete</button>
+            <form method="post" asp-action="ResetPassword" asp-route-id="@Model.Id" class="btn">
+                <button type="submit" class="btn btn-warning">Reset Password</button>
+            </form>
+        </div>
+    </div>
 </div>
 
 <div id="delete-user-modal" class="modal">

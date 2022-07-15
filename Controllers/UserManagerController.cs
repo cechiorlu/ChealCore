@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Net;
+using System.Text;
 using ChealCore.Models;
 using ChealCore.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChealCore.Controllers
@@ -214,6 +216,26 @@ namespace ChealCore.Controllers
             }
 
             return RedirectToAction("Manage", new { Id = userId });
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"User with Id = {id} cannot be found";
+                return View("NotFound");
+            }
+            else
+            {
+                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+
+                return RedirectToPage("/Account/ResetPassword", new RouteValueDictionary(new { area = "Identity", page = "/Account/ResetPassword", code }));
+            }
         }
     }
 }
