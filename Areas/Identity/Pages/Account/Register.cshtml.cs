@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+using ChealCore.Enums;
 using ChealCore.Models;
 using EmailService;
 using Microsoft.AspNetCore.Authentication;
@@ -130,11 +131,11 @@ namespace ChealCore.Areas.Identity.Pages.Account
                     _logger.LogInformation("User created a new account with password.");
 
                     // add basic role by default
-                    //await _userManager.AddToRoleAsync(user, DefaultRoles.Basic.ToString());
+                    await _userManager.AddToRoleAsync(user, Roles.Basic.ToString());
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl, password = Input.Password });
                     }
                     else
                     {

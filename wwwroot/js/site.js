@@ -1,5 +1,27 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿
+// Delete modal scripts
+var modal = document.getElementById("delete-modal");
 
-// Write your JavaScript code.
+var deleteBtn = document.getElementById("delete-action-trigger");
 
+var closeBtn = document.getElementById("close-delete-modal-btn");
+
+var cancelDeleteBtn = document.getElementById("cancel-delete")
+
+deleteBtn.onclick = function () {
+    modal.style.display = "block";
+}
+
+closeBtn.onclick = function () {
+    modal.style.display = "none";
+}
+
+cancelDeleteBtn.onclick = function () {
+    modal.style.display = "none";
+}
+
+window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}

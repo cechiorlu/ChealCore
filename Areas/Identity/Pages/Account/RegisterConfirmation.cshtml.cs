@@ -35,7 +35,7 @@ namespace ChealCore.Areas.Identity.Pages.Account
 
         public string EmailConfirmationUrl { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string email, string returnUrl = null)
+        public async Task<IActionResult> OnGetAsync(string email, string password, string returnUrl = null)
         {
             if (email == null)
             {
@@ -59,7 +59,10 @@ namespace ChealCore.Areas.Identity.Pages.Account
                 values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                 protocol: Request.Scheme);
 
-            var message = new Message(user.Email, user.FirstName + ' ' + user.LastName, "Confirm Registration", $"Please confirm your account by <a href={EmailConfirmationUrl}>clicking here</a>.");
+            var message = new Message(user.Email, user.FirstName + ' ' + user.LastName, "Confirm Registration", $"<h2>Account created</h2>" +
+                $"<p>Email: {email}</p>" +
+                $"<p>Password: {password}</p>" +
+                $"<p>Please confirm your account by <a href={EmailConfirmationUrl}>clicking here</a>.<p>");
             _emailSender.SendEmail(message);
 
 
