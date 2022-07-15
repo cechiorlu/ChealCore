@@ -2,13 +2,13 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @{
-    var applicationUser = UserManager.GetUserAsync(User).Result;
+    ApplicationUser? applicationUser = UserManager.GetUserAsync(User).Result;
 }
 <ul class="navbar-nav flex">
     @if (SignInManager.IsSignedIn(User))
     {
         <div class="dropdown">
-            @if (applicationUser.ProfilePicture != null)
+            @if (applicationUser?.ProfilePicture != null)
             {
                 <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="data:image/*;base64,@(Convert.ToBase64String(applicationUser.ProfilePicture))"
                      type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" class="rounded-circle" />
@@ -21,7 +21,7 @@
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
                 <li class="dropdown-item">
                     <div class="row">
-                        @if (applicationUser.ProfilePicture != null)
+                        @if (applicationUser?.ProfilePicture != null)
                         {
                             <img style="width:45px;height:45px; object-fit:cover; border-radius:50%" src="data:image/*;base64,@(Convert.ToBase64String(applicationUser.ProfilePicture))"
                                  class="rounded-circle col" />
@@ -31,8 +31,8 @@
                             <img style="width:45px;height:45px; object-fit:cover; border-radius:50%" src="" class="rounded-circle col" />
                         }
                         <div>
-                            <p>@applicationUser.FirstName @applicationUser.LastName</p>
-                            <p>@applicationUser.Email</p>
+                            <p>@applicationUser?.FirstName @applicationUser?.LastName</p>
+                            <p>@applicationUser?.Email</p>
                         </div>
                     </div>
                 </li>

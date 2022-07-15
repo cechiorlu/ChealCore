@@ -1,15 +1,15 @@
-﻿
-// Delete modal scripts
-var modal = document.getElementById("delete-modal");
+﻿// Delete user modal scripts
+const modal = document.getElementById("delete-user-modal");
 
-var deleteBtn = document.getElementById("delete-action-trigger");
+const deleteBtn = document.getElementById("delete-user-trigger");
 
-var closeBtn = document.getElementById("close-delete-modal-btn");
+const closeBtn = document.getElementById("close-delete-user-modal-btn");
 
-var cancelDeleteBtn = document.getElementById("cancel-delete")
+const cancelDeleteBtn = document.getElementById("cancel-delete-user")
 
 deleteBtn.onclick = function () {
     modal.style.display = "block";
+    console.log(modal, deleteBtn, closeBtn, cancelDeleteBtn)
 }
 
 closeBtn.onclick = function () {

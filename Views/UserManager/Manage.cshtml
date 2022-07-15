@@ -106,15 +106,15 @@
             </div>
         </div>
     </form>
-    <button class="btn btn-danger mt-3" id="delete-action-trigger">Delete</button>
+    <button class="btn btn-danger mt-3" id="delete-user-trigger">Delete</button>
 </div>
 
-<div id="delete-modal" class="modal">
+<div id="delete-user-modal" class="modal">
     <div class="modal-content">
-        <span class="close" id="close-delete-modal-btn">&times;</span>
-        <h6 style="text-align:center">Are you sure you want to delete?</h6>
+        <span class="close" id="close-delete-user-modal-btn">&times;</span>
+        <h6 style="text-align:center">Are you sure you want to delete user?</h6>
         <form class="form-group row mt-3 w-75 mx-auto" method="post" asp-action="Delete" asp-route-id="@Model.Id">
-            <a class="btn btn-success col-5" id="cancel-delete">No</a>
+            <a class="btn btn-success col-5" id="cancel-delete-user">No</a>
             <button type="submit" class="btn btn-danger col-5 ms-auto">Yes</button>
         </form>
     </div>
