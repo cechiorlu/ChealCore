@@ -156,16 +156,19 @@ namespace ChealCore.Controllers
             }
 
             var model = new List<UserRolesViewModel>();
+            var roles = _roleManager.Roles.ToArray();
 
-            foreach (var role in _roleManager.Roles)
+            foreach (var role in roles)
             {
+                bool isInRole = await _userManager.IsInRoleAsync(user, role.Name);
+
                 var userRolesViewModel = new UserRolesViewModel
                 {
                     RoleId = role.Id,
                     RoleName = role.Name
                 };
 
-                if (await _userManager.IsInRoleAsync(user, role.Name))
+                if (isInRole)
                 {
                     userRolesViewModel.IsSelected = true;
                 }
@@ -180,7 +183,7 @@ namespace ChealCore.Controllers
             return View(model);
         }
 
-        // GET: /UserManager/ManageUserRoles/user.Id
+        // POST: /UserManager/ManageUserRoles/user.Id
         [HttpPost]
         public async Task<IActionResult> ManageUserRoles(List<UserRolesViewModel> model, string userId)
         {
