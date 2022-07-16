@@ -27,7 +27,7 @@ namespace ChealCore.Areas.Identity.Pages.Account
         [BindProperty]
         public InputModel Input { get; set; }
 
-        public string PreviousPage { get; set; } 
+        public string PreviousPage { get; set; }
         public string Id { get; set; }
 
         public class InputModel
@@ -36,25 +36,25 @@ namespace ChealCore.Areas.Identity.Pages.Account
             [EmailAddress]
             public string Email { get; set; }
 
-          
+
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
-           
+
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
-           
+
             [Required]
             public string Code { get; set; }
 
         }
 
-        public IActionResult OnGet(string id, string code = null, string prev = null)
+        public async Task<IActionResult> OnGet(string id, string code = null, string prev = null)
         {
             if (code == null)
             {
@@ -66,6 +66,13 @@ namespace ChealCore.Areas.Identity.Pages.Account
                 {
                     Code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code))
                 };
+
+                var user = await _userManager.FindByIdAsync(id);
+
+                if (user != null && prev != null)
+                {
+                    Input.Email = user.Email;
+                }
 
                 PreviousPage = prev;
                 Id = id;
