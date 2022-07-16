@@ -220,7 +220,7 @@ namespace ChealCore.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> ResetPassword(string id)
+        public async Task<IActionResult> ResetPassword(string id, string prev)
         {
             var user = await _userManager.FindByIdAsync(id);
 
@@ -234,7 +234,7 @@ namespace ChealCore.Controllers
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
-                return RedirectToPage("/Account/ResetPassword", new RouteValueDictionary(new { area = "Identity", page = "/Account/ResetPassword", code }));
+                return RedirectToPage("/Account/ResetPassword", new RouteValueDictionary(new { area = "Identity", page = "/Account/ResetPassword", code, prev, id}));
             }
         }
     }
