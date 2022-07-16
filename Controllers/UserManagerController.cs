@@ -47,7 +47,7 @@ namespace ChealCore.Controllers
             var userClaims = await _userManager.GetClaimsAsync(user);
             var userRoles = await _userManager.GetRolesAsync(user);
 
-            var model = new ManageUserViewModel
+            var model = new UsersViewModel
             {
                 Id = user.Id,
                 Email = user.Email,
@@ -65,7 +65,7 @@ namespace ChealCore.Controllers
 
         // POST: /UserManager/Manage
         [HttpPost]
-        public async Task<IActionResult> Manage(ManageUserViewModel model)
+        public async Task<IActionResult> Manage(UsersViewModel model)
         {
             var user = await _userManager.FindByIdAsync(model.Id);
 

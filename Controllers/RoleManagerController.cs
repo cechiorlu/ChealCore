@@ -60,14 +60,26 @@ namespace ChealCore.Controllers
                 return NotFound();
             }
 
-            return View(role);
+            else
+            {
+                var roleClaims = await _roleManager.GetClaimsAsync(role);
+
+                var model = new RolesViewModel
+                {
+                    Id = role.Id,
+                    Name = role.Name,
+                    Claims = roleClaims.Select(c => c.Value).ToList(),
+                };
+
+                return View(model);
+            }
         }
 
 
         // POST: /RoleManager/Edit/role.ID
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(ManageUserRolesViewModel model)
+        public async Task<IActionResult> Edit(RolesViewModel model)
         {
             var role = await _roleManager.FindByIdAsync(model.Id);
 
@@ -101,7 +113,7 @@ namespace ChealCore.Controllers
         // POST: /RoleManager/Delete/role.ID
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(ManageUserRolesViewModel model)
+        public async Task<IActionResult> Delete(RolesViewModel model)
         {
             var role = await _roleManager.FindByIdAsync(model.Id);
 

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ChealCore.Models.ViewModels
 {
-    public class ManageUserViewModel
+    public class UsersViewModel
     {
         public string Id { get; set; }
 

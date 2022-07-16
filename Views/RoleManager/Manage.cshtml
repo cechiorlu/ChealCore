@@ -1,4 +1,4 @@
-﻿@model Microsoft.AspNetCore.Identity.IdentityRole
+﻿@model RolesViewModel
 
 @{
     ViewData["Title"] = "Manage roles";
@@ -21,21 +21,45 @@
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
                 <div class="form-group mt-2">
-                    <button type="submit" class="btn btn-primary">Update</button>
-                    <a class="btn btn-secondary" asp-action="Index" asp-controller="RoleManager">Cancel</a>
+                    <a class="btn btn-primary" asp-action="Index" asp-controller="RoleManager">Cancel</a>
+                    <button type="submit" class="btn btn-danger">Update</button>
                 </div>
             </form>
 
-            <div class="card mt-3">
+            @*<div class="card mt-3">
+            <div class="card-header">
+                <h5>Role Functions</h5>
+            </div>
+            <div class="card-body">
+
+            </div>
+            <div class="card-footer">
+                <a href="#" style="width:auto" class="btn btn-primary">
+                    Manage Functions
+                </a>
+            </div>
+        </div>*@
+
+            <div class="card bg-light mt-3" style="width:47%;">
                 <div class="card-header">
-                    <h5>Role Functions</h5>
+                    <h5>Role Claims</h5>
                 </div>
                 <div class="card-body">
-
+                    @if (Model.Claims.Any())
+                    {
+                        foreach (var claim in Model.Claims)
+                        {
+                            <h6 class="card-title">@claim</h6>
+                        }
+                    }
+                    else
+                    {
+                        <h6 class="card-title">None at the moment</h6>
+                    }
                 </div>
                 <div class="card-footer">
                     <a href="#" style="width:auto" class="btn btn-primary">
-                        Manage Functions
+                        Manage Claims
                     </a>
                 </div>
             </div>
