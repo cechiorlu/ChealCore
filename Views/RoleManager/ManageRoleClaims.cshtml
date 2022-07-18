@@ -1,33 +1,37 @@
-﻿@model ChealCore.Models.ViewModels.RoleClaimViewModel
+﻿@model RoleClaimsViewModel
 
 @{
-    var roleId = ViewBag.RoleId;
+    @*var roleId = ViewBag.RoleId;*@
 }
 
 
-<form method="post" class="w-25" style="margin:auto;margin-top:50px;">
-    <div class="card">
-        <div class="card-header">
-            <h2>Manage Role Claims</h2>
-        </div>
-        <div class="card-body">
-            @for (int i = 0; i < Model.Claims.Count; i++)
-            {
-                <div class="form-check m-1">
-                    <input type="hidden" asp-for="@Model.Claims[i].ClaimType" />
-                    <input asp-for="@Model.Claims[i].IsSelected" class="form-check-input" />
-                    <label class="form-check-label" asp-for="@Model.Claims[i].IsSelected">
-                        @Model.Claims[i].ClaimType
-                    </label>
-                </div>
-            }
-            <div asp-validation-summary="All" class="text-danger"></div>
-        </div>
-        <div class="card-footer">
-            <input type="submit" value="Update" class="btn btn-primary"
-                   style="width:auto" />
-            <a asp-action="EditRole" asp-route-id="@Model.RoleId"
-               class="btn btn-primary" style="width:auto">Cancel</a>
-        </div>
+<div class="container">
+    <div class="my-3">
+        <a asp-action="Manage" asp-route-id="@Model.RoleId" asp-controller="RoleManager" class="nav-link active px-0"><i class="bi bi-arrow-left"></i> Back</a>
     </div>
-</form>
+    <h4>Manage Role Claims</h4>
+    <hr />
+    <form method="post">
+        <div class="card text-white bg-dark mb-3" style="max-width: 20rem;">
+            <div class="card-body">
+                @for (int i = 0; i < Model.Claims.Count; i++)
+                {
+                    <div class="form-check m-1">
+                        <input type="hidden" asp-for="@Model.Claims[i].ClaimType" />
+                        <input asp-for="@Model.Claims[i].IsSelected" class="form-check-input" />
+                        <label class="form-check-label" asp-for="@Model.Claims[i].IsSelected">
+                            @Model.Claims[i].ClaimType
+                        </label>
+                    </div>
+                }
+                <div asp-validation-summary="All" class="text-danger"></div>
+            </div>
+            <div class="card-footer">
+                <a asp-action="Manage" asp-route-id="@Model.RoleId" asp-controller="RoleManager"
+                   class="btn btn-primary" style="width:auto">Cancel</a>
+                <input type="submit" value="Update" class="btn btn-danger"
+                       style="width:auto" />
+            </div>
+        </div>
+    </form>
+</div>

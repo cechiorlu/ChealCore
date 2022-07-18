@@ -1,0 +1,43 @@
+﻿@model List<System.Security.Claims.Claim>
+@{
+    ViewData["Title"] = "Claims Manager";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var claimType = ViewBag.ClaimType;
+}
+
+<div class="container mt-4">
+    <h4>Claims Manager</h4>
+    <hr />
+    <form method="post" asp-action="AddFunction" asp-controller="ClaimsManager">
+        <div class="input-group">
+            <input name="claimType" class="form-control w-25">
+            <span class="input-group-btn">
+                <button class="btn btn-primary">
+                    <i class="bi bi-folder-plus px-2"></i>
+                    Add New Function
+                </button>
+            </span>
+        </div>
+    </form>
+    <form method="post" asp-action="Delete" asp-controller="ClaimsManager" asp-route-claimType="claimType">
+        <table class="table table-striped mt-4">
+            <thead>
+                <tr>
+                    <th>Claims</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var claim in Model)
+                {
+                    <tr>
+                        <td>@claim.Type</td>
+                        @*<td>
+                            <input type="submit" value="Delete" class="btn btn-link"
+                                   style="width:auto" />
+                        </td>*@
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+</div>

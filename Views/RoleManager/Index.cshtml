@@ -2,7 +2,6 @@
 @{
     ViewData["Title"] = "Role Manager";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    string[] defaultRoles = { "SUPERADMIN", "ADMIN", "BASIC" };
 }
 
 <div class="container mt-4">
@@ -29,24 +28,19 @@
         <tbody>
             @foreach (var role in Model)
             {
-                <tr>
-                    <td>@role.Id</td>
-                    <td>@role.NormalizedName</td>
-                    @if (!defaultRoles.Any(s => s == role.NormalizedName))
-                    {
+                @if (role.NormalizedName != "SUPERADMIN")
+                {
+                    <tr>
+                        <td>@role.Id</td>
+                        <td>@role.NormalizedName</td>
 
                         <td>
                             <a class="" asp-controller="RoleManager" asp-action="Manage" asp-route-id="@role.Id">
                                 Manage
                             </a>
                         </td>
-
-                    }
-                    else
-                    {
-                        <td></td>
-                    }
-                </tr>
+                    </tr>
+                }
             }
         </tbody>
     </table>

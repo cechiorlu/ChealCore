@@ -13,6 +13,7 @@
     <None Remove="Microsoft.Extensions.Configuration" />
     <None Remove="NETCore.MailKit" />
     <None Remove="Enums\" />
+    <None Remove="Views\ClaimsManager\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
@@ -44,5 +45,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Enums\" />
+    <Folder Include="Views\ClaimsManager\" />
   </ItemGroup>
 </Project>
