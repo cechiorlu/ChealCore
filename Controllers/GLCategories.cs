@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ChealCore.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, SuperAdmin")]
     public class GLCategoriesController : Controller
     {
         private readonly ApplicationDbContext _context;
