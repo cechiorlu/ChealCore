@@ -12,6 +12,27 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
     }
 
+    public DbSet<GLCategory>? GLCategory { get; set; }
+
+    public DbSet<Branch>? Branch { get; set; }
+
+    public DbSet<GLAccount>? GLAccount { get; set; }
+
+    public DbSet<UserTill>? UserTill { get; set; }
+
+    public DbSet<AccountConfiguration>? AccountConfiguration { get; set; }
+
+    public DbSet<GLPosting>? GLPosting { get; set; }
+
+    public DbSet<Customer>? Customer { get; set; }
+
+    public DbSet<CustomerAccount>? CustomerAccount { get; set; }
+
+    public DbSet<TellerPosting>? TellerPosting { get; set; }
+
+    public DbSet<Transaction>? Transaction { get; set; }
+
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
