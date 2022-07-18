@@ -1,0 +1,68 @@
+﻿@model IEnumerable<ChealCore.Models.GLCategory>
+
+@{
+    ViewData["Title"] = "GL Categoty Manager";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h1 class="m-3">GL Category Manager</h1>
+
+
+<button class="btn btn-info" style="float:right">
+    <a asp-action="create" style="text-decoration:none">
+        Add New GL Category
+    </a>
+</button>
+
+<table class="table table-hover m-2">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CodeNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsEnabled)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.mainAccountCategory)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CategoryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CategoryDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CodeNumber)
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.IsEnabled)*@
+                    @item.IsEnabled
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.mainAccountCategory)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.CategoryId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.CategoryId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.CategoryId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

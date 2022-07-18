@@ -15,6 +15,7 @@
     <None Remove="Enums\" />
     <None Remove="Views\ClaimsManager\" />
     <None Remove="Views\GLAccounts\" />
+    <None Remove="Views\GLCategories\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
@@ -48,5 +49,6 @@
     <Folder Include="Enums\" />
     <Folder Include="Views\ClaimsManager\" />
     <Folder Include="Views\GLAccounts\" />
+    <Folder Include="Views\GLCategories\" />
   </ItemGroup>
 </Project>
