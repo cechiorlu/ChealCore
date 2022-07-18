@@ -1,0 +1,70 @@
+﻿@model IEnumerable<ChealCore.Models.GLAccount>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="container mt-5">
+    <h4>GL Account Manager</h4>
+    <hr />
+    <button class="btn btn-primary">
+        <a asp-action="Create" style="text-decoration:none">Create New</a>
+    </button>
+    <table class="table table-hover m-2">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.AccountName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CodeNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AccountBalance)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.GLCategory)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Branch)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsActivated)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AccountName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CodeNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AccountBalance)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GLCategory.CategoryDescription)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Branch.Address)
+                    </td>
+                    <td>
+                        @* @Html.DisplayFor(modelItem => item.IsActivated)*@
+                        @item.IsActivated
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
