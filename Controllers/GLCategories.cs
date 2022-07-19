@@ -30,24 +30,6 @@ namespace ChealCore.Controllers
                         Problem("Entity set 'ApplicationDbContext.GLCategory'  is null.");
         }
 
-        // GET: GLCategories/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.GLCategory == null)
-            {
-                return NotFound();
-            }
-
-            var gLCategory = await _context.GLCategory
-                .FirstOrDefaultAsync(m => m.CategoryId == id);
-            if (gLCategory == null)
-            {
-                return NotFound();
-            }
-
-            return View(gLCategory);
-        }
-
         // GET: GLCategories/Create
         public IActionResult Create()
         {
@@ -122,24 +104,6 @@ namespace ChealCore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(gLCategory);
-        }
-
-        // GET: GLCategories/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.GLCategory == null)
-            {
-                return NotFound();
-            }
-
-            var gLCategory = await _context.GLCategory
-                .FirstOrDefaultAsync(m => m.CategoryId == id);
-            if (gLCategory == null)
-            {
-                return NotFound();
-            }
-
             return View(gLCategory);
         }
 

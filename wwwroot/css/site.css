@@ -62,4 +62,12 @@ body {
     cursor: pointer;
 }
 
+.modal-trigger {
+    cursor: pointer;
+}
+
+#delete-glcategory-modal .modal-content{
+    height: auto;
+}
+
 /* end */

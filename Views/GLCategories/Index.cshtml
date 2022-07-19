@@ -49,19 +49,77 @@
                         @Html.DisplayFor(modelItem => item.CodeNumber)
                     </td>
                     <td>
-                        @*@Html.DisplayFor(modelItem => item.IsEnabled)*@
                         @item.IsEnabled
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.mainAccountCategory)
                     </td>
                     <td>
+                        <a class="btn-link modal-trigger" id="getdetails-glcategory-trigger">Details</a> |
                         <a asp-action="Edit" asp-route-id="@item.CategoryId">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.CategoryId">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.CategoryId">Delete</a>
+                        <a class="btn-link modal-trigger" id="delete-glcategory-trigger">Delete</a>
                     </td>
                 </tr>
+
+
+                // modals for glcAccount
+                <div id="delete-glcategory-modal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" id="close-delete-glcategory-modal-btn">&times;</span>
+                        <h6 class="mheader" style="text-align:center">Are you sure you want to delete GL Account?</h6>
+                        <hr />
+                        <div class="mb-2">
+                            <dl class="row">
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(modelItem => item.CategoryName)
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(modelItem => item.CategoryName)
+                                </dd>
+
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(modelItem => item.CategoryDescription)
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(modelItem => item.CategoryDescription)
+                                </dd>
+
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(modelItem => item.CodeNumber)
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(modelItem => item.CodeNumber)
+                                </dd>
+
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(modelItem => item.IsEnabled)
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(modelItem => item.IsEnabled)
+                                </dd>
+
+                                <dt class="col-sm-4">
+                                    @Html.DisplayNameFor(modelItem => item.mainAccountCategory)
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @Html.DisplayFor(modelItem => item.mainAccountCategory)
+                                </dd>
+                            </dl>
+                            <div id="glc-footer-form">
+                                <form class="form-group row mt-3 w-75 mx-auto" method="post" asp-action="Delete" asp-route-id="@item.CategoryId">
+                                    <a class="btn btn-success col-5" id="cancel-delete-glcategory">No</a>
+                                    <button type="submit" class="btn btn-danger col-5 ms-auto">Yes</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             }
         </tbody>
     </table>
 </div>
+
+@section Scripts {
+    <script src="~/js/deleteGLCategory.js"></script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
