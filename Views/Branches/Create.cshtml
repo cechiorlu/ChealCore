@@ -1,0 +1,48 @@
+﻿@model ChealCore.Models.Branch
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="my-3">
+        <a asp-action="Index" class="nav-link active px-0"><i class="bi bi-arrow-left"></i> Back</a>
+    </div>
+    <form asp-action="Create" class="w-50 mx-auto">
+        <h4 style="margin-left:30%; margin-top:30px">Create a new branch</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group mb-3">
+            <label asp-for="BranchName" class="control-label mb-2"></label>
+            <input asp-for="BranchName" class="form-control" />
+            <span asp-validation-for="BranchName" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Address" class="control-label mb-2"></label>
+            <input asp-for="Address" class="form-control" />
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="SortCode" class="control-label mb-2"></label>
+            <input asp-for="SortCode" class="form-control" />
+            <span asp-validation-for="SortCode" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Status" class="control-label mb-2"></label>
+            <select asp-for="Status" class="form-control">
+                <option value="open">Open</option>
+                <option value="close">Closed</option>
+            </select>
+            <span asp-validation-for="Status" class="text-danger"></span>
+        </div>
+        <div class="form-group" mb-3>
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

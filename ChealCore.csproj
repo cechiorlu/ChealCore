@@ -16,6 +16,7 @@
     <None Remove="Views\ClaimsManager\" />
     <None Remove="Views\GLAccounts\" />
     <None Remove="Views\GLCategories\" />
+    <None Remove="Views\Branches\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
@@ -50,5 +51,6 @@
     <Folder Include="Views\ClaimsManager\" />
     <Folder Include="Views\GLAccounts\" />
     <Folder Include="Views\GLCategories\" />
+    <Folder Include="Views\Branches\" />
   </ItemGroup>
 </Project>

@@ -4,54 +4,52 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
 
-<h4>GLAccount</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ID" />
-            <div class="form-group">
-                <label asp-for="AccountName" class="control-label"></label>
-                <input asp-for="AccountName" class="form-control" />
-                <span asp-validation-for="AccountName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CodeNumber" class="control-label"></label>
-                <input asp-for="CodeNumber" class="form-control" />
-                <span asp-validation-for="CodeNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AccountBalance" class="control-label"></label>
-                <input asp-for="AccountBalance" class="form-control" />
-                <span asp-validation-for="AccountBalance" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="GLCategoryID" class="control-label"></label>
-                <select asp-for="GLCategoryID" class="form-control" asp-items="ViewBag.GLCategoryID"></select>
-                <span asp-validation-for="GLCategoryID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="BranchID" class="control-label"></label>
-                <select asp-for="BranchID" class="form-control" asp-items="ViewBag.BranchID"></select>
-                <span asp-validation-for="BranchID" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsActivated" /> @Html.DisplayNameFor(model => model.IsActivated)
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+<div class="container">
+    <div class="my-3">
+        <a asp-action="Index" class="nav-link active px-0"><i class="bi bi-arrow-left"></i> Back</a>
     </div>
-</div>
+    <form asp-action="Edit" class="w-50 mx-auto">
+        <h4>Edit GL Account</h4>
+        <hr />
 
-<div>
-    <a asp-action="Index">Back to List</a>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="ID" />
+        <div class="form-group mb-3">
+            <label asp-for="AccountName" class="control-label mb-2"></label>
+            <input asp-for="AccountName" class="form-control" />
+            <span asp-validation-for="AccountName" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="CodeNumber" class="control-label mb-2"></label>
+            <input asp-for="CodeNumber" class="form-control" />
+            <span asp-validation-for="CodeNumber" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="AccountBalance" class="control-label mb-2"></label>
+            <input asp-for="AccountBalance" class="form-control" />
+            <span asp-validation-for="AccountBalance" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="GLCategoryID" class="control-label mb-2"></label>
+            <select asp-for="GLCategoryID" class="form-control" asp-items="ViewBag.GLCategoryID"></select>
+            <span asp-validation-for="GLCategoryID" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="BranchID" class="control-label mb-2"></label>
+            <select asp-for="BranchID" class="form-control" asp-items="ViewBag.BranchID"></select>
+            <span asp-validation-for="BranchID" class="text-danger"></span>
+        </div>
+        <div class="form-group form-check mb-3">
+            <label class="form-check-label">
+                <input class="form-check-input" asp-for="IsActivated" /> @Html.DisplayNameFor(model => model.IsActivated)
+            </label>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
 </div>
 
 @section Scripts {

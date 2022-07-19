@@ -92,7 +92,7 @@ namespace ChealCore.Controllers
                 return NotFound();
             }
             ViewData["BranchID"] = new SelectList(_context.Branch, "Id", "Address", gLAccount.BranchID);
-            ViewData["GLCategoryID"] = new SelectList(_context.GLCategory, "CategoryId", "CategoryDescription", gLAccount.GLCategoryID);
+            ViewData["GLCategoryID"] = new SelectList(_context.GLCategory, "CategoryId", "CategoryName", gLAccount.GLCategoryID);
             return View(gLAccount);
         }
 
