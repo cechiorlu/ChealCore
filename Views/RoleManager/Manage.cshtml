@@ -12,40 +12,35 @@
     </div>
     <h4>ApplicationRole</h4>
     <hr />
-    <div class="row">
-        <div class="col">
-            @if (!defaultRoles.Any(s => s == Model.Name))
-            {
-                <form asp-action="Edit" asp-controller="RoleManager">
+    <form asp-action="Edit" asp-controller="RoleManager">
+        <div class="row">
+            <div class="col-5">
+                @if (!defaultRoles.Any(s => s == Model.Name))
+                {
+
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="Id" />
-                    <div class="form-group mt-2">
+                    <div class="form-group mt-3">
                         <label asp-for="Name" class="control-label mb-1"></label>
                         <input asp-for="Name" class="form-control" />
                         <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
-                    <div class="form-group mt-2">
-                        <a class="btn btn-primary" asp-action="Index" asp-controller="RoleManager">Cancel</a>
-                        <button type="submit" class="btn btn-danger">Update</button>
-                    </div>
-                </form>
-            }
 
-            @*<div class="card mt-3">
-                    <div class="card-header">
-                        <h5>Role Functions</h5>
+                    @*<button class="btn btn-danger mt-3" id="delete-role-trigger">Delete</button>*@
+                    <div class="form-group my-3">
+                        <input asp-for="@Model.IsEnabled" class="form-check-input" />
+                        <label class="form-check-label" asp-for="@Model.IsEnabled">
+                            Active
+                        </label>
                     </div>
-                    <div class="card-body">
+                }
+                <div class="form-group mt-2">
+                    <a class="btn btn-primary" asp-action="Index" asp-controller="RoleManager">Cancel</a>
+                    <button type="submit" class="btn btn-danger">Update</button>
+                </div>
+            </div>
 
-                    </div>
-                    <div class="card-footer">
-                        <a href="#" style="width:auto" class="btn btn-primary">
-                            Manage Functions
-                        </a>
-                    </div>
-                </div>*@
-
-            <div class="card bg-light mt-3" style="width:47%;">
+            <div class="card mt-3 col-5 ms-auto text-white bg-primary">
                 <div class="card-header">
                     <h5>Role Functions</h5>
                 </div>
@@ -63,32 +58,28 @@
                     }
                 </div>
                 <div class="card-footer">
-                    <a asp-action="ManageRoleClaims" asp-controller="RoleManager" asp-route-roleId="@Model.Id" style="width:auto" class="btn btn-primary">
+                    <a asp-action="ManageRoleClaims" asp-controller="RoleManager" asp-route-roleId="@Model.Id" style="width:auto" class="btn btn-danger">
                         Manage Claims
                     </a>
                 </div>
             </div>
         </div>
-    </div>
-    @if (!defaultRoles.Any(s => s == Model.Name))
-    {
-        <button class="btn btn-danger mt-3" id="delete-role-trigger">Delete</button>
-    }
+
+    </form>
 </div>
 
-<div id="delete-role-modal" class="modal">
-    <div class="modal-content">
-        <span class="close" id="close-delete-role-modal-btn">&times;</span>
-        <h6 style="text-align:center">Are you sure you want to delete role?</h6>
-        <form class="form-group row mt-3 w-75 mx-auto" method="post" asp-action="Delete" asp-controller="RoleManager" asp-route-id="@Model.Id">
-            <input type="hidden" asp-for="Id" />
-            <a class="btn btn-success col-5" id="cancel-delete-role">No</a>
-            <button type="submit" class="btn btn-danger col-5 ms-auto">Yes</button>
-        </form>
-    </div>
-</div>
+@*<div id="delete-role-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-delete-role-modal-btn">&times;</span>
+            <h6 style="text-align:center">Are you sure you want to delete role?</h6>
+            <form class="form-group row mt-3 w-75 mx-auto" method="post" asp-action="Delete" asp-controller="RoleManager" asp-route-id="@Model.Id">
+                <input type="hidden" asp-for="Id" />
+                <a class="btn btn-success col-5" id="cancel-delete-role">No</a>
+                <button type="submit" class="btn btn-danger col-5 ms-auto">Yes</button>
+            </form>
+        </div>
+    </div>*@
 
 @section Scripts {
-    <script src="~/js/deleteRoleScript.js"></script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

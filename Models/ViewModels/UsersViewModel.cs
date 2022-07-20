@@ -24,5 +24,6 @@ namespace ChealCore.Models.ViewModels
 
         public IList<string> Roles { get; set; } = new List<string>();
 
+        public bool IsEnabled { get; set; } = true;
     }
 }

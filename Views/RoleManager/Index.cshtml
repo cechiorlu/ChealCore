@@ -1,45 +1,49 @@
-﻿@model List<Microsoft.AspNetCore.Identity.IdentityRole>
+﻿@model CreateRolesViewModel
 @{
     ViewData["Title"] = "Role Manager";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    int i = 1;
 }
 
 <div class="container mt-4">
     <h4>Role Manager</h4>
     <hr />
     <form method="post" asp-action="AddRole" asp-controller="RoleManager">
-        <div class="input-group">
-            <input name="roleName" class="form-control w-25">
-            <span class="input-group-btn">
-                <button class="btn btn-primary">
-                    <i class="bi bi-folder-plus px-2"></i>
-                    Add New Role
-                </button>
-            </span>
+        <div class="form-group">
+            <span asp-validation-for="InputName.RoleName"></span>
+            <input asp-for="InputName.RoleName" class="form-control w-25 mb-2" />
+            <button class="btn btn-primary" type="submit">
+                <i class="bi bi-folder-plus px-2"></i>
+                Add New Role
+            </button>
         </div>
     </form>
-    <table class="table table-striped mt-4">
-        <thead>
+    <table class="table table-hover align-right mb-0 mt-4">
+        <thead class="table-dark">
             <tr>
-                <th>Id</th>
-                <th>Role</th>
+                <th scope="col">#</th>
+                <th scope="col">Role</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var role in Model)
+            @if (Model.Roles != null)
             {
-                @if (role.NormalizedName != "SUPERADMIN")
+                foreach (var role in Model.Roles)
                 {
-                    <tr>
-                        <td>@role.Id</td>
-                        <td>@role.NormalizedName</td>
-
-                        <td>
-                            <a class="" asp-controller="RoleManager" asp-action="Manage" asp-route-id="@role.Id">
-                                Manage
-                            </a>
-                        </td>
-                    </tr>
+                    if (role.NormalizedName != "SUPERADMIN")
+                    {
+                        <tr>
+                            <th scope="row">@i</th>
+                            <td>@role.NormalizedName</td>
+                            <td>
+                                <a style="float:right;" asp-controller="RoleManager" asp-action="Manage" asp-route-id="@role.Id">
+                                    Manage
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                    i++;
                 }
             }
         </tbody>

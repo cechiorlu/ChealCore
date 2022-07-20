@@ -4,6 +4,7 @@ using ChealCore.Data;
 using ChealCore.Models;
 using EmailService;
 using System.Diagnostics;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,7 +33,6 @@ var emailConfig = builder.Configuration
         .Get<EmailConfiguration>();
 builder.Services.AddSingleton(emailConfig);
 builder.Services.AddScoped<IEmailSender, EmailSender>();
-
 
 var app = builder.Build();
 

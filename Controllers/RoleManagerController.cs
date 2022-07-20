@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Security.Claims;
 using ChealCore.Enums;
@@ -29,21 +30,25 @@ namespace ChealCore.Controllers
 
         public async Task<IActionResult> Index()
         {
+            var rolesModel = new CreateRolesViewModel();
             var roles = await _roleManager.Roles.ToListAsync();
-            return View(roles);
+            rolesModel.Roles = roles;
+            return View(rolesModel);
         }
 
         // POST: /RoleManager
         // create new role
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> AddRole(string roleName)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddRole(CreateRolesViewModel createRolesViewModel)
         {
-            if (roleName != null)
+            if (ModelState.IsValid)
             {
-                await _roleManager.CreateAsync(new IdentityRole(roleName.Trim()));
+                await _roleManager.CreateAsync(new IdentityRole(createRolesViewModel.InputName.RoleName.Trim()));
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+            return NotFound();
         }
 
         // GET: /RoleManager/Manage/role.ID
@@ -188,7 +193,7 @@ namespace ChealCore.Controllers
 
         // POST: /UserManager/ManageRoleClaims/
         [HttpPost]
-        public async Task<IActionResult> ManageRoleClaims(RoleClaimsViewModel model)
+        public async Task<IActionResult> ManageRoleClaims([Bind("RoleId", "Claims")] RoleClaimsViewModel model)
         {
             var role = await _roleManager.FindByIdAsync(model.RoleId);
 

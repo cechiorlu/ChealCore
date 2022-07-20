@@ -17,6 +17,8 @@
     <None Remove="Views\GLAccounts\" />
     <None Remove="Views\GLCategories\" />
     <None Remove="Views\Branches\" />
+    <None Remove="FluentValidation.AspNetCore" />
+    <None Remove="Validation\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
@@ -39,6 +41,7 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.5" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
     <PackageReference Include="NETCore.MailKit" Version="2.1.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.1.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -52,5 +55,6 @@
     <Folder Include="Views\GLAccounts\" />
     <Folder Include="Views\GLCategories\" />
     <Folder Include="Views\Branches\" />
+    <Folder Include="Validation\" />
   </ItemGroup>
 </Project>

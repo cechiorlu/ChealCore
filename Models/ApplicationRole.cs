@@ -1,5 +1,7 @@
 ﻿using System;
+using FluentValidation;
 using Microsoft.AspNetCore.Identity;
+using ChealCore.Data;
 
 namespace ChealCore.Models
 {
@@ -7,5 +9,5 @@ namespace ChealCore.Models
     {
         public bool IsEnabled { get; set; }
     }
-}
 
+}

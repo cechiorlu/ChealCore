@@ -12,6 +12,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
     }
 
+    //public DbSet<ApplicationRole>? ApplicationRole { get; set; }
+
     public DbSet<GLCategory>? GLCategory { get; set; }
 
     public DbSet<Branch>? Branch { get; set; }
