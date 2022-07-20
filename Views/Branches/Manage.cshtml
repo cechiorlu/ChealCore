@@ -1,7 +1,7 @@
 ﻿@model ChealCore.Models.Branch
 
 @{
-    ViewData["Title"] = "Create Branch";
+    ViewData["Title"] = "Manage Branches";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -9,8 +9,8 @@
     <div class="my-3">
         <a asp-action="Index" class="nav-link active px-0"><i class="bi bi-arrow-left"></i> Back</a>
     </div>
-    <form asp-action="Create" class="w-50 mx-auto">
-        <h4 style="margin-left:30%; margin-top:30px">Create a new branch</h4>
+    <form asp-action="Manage" class="w-50 mx-auto">
+        <h4 style="margin-left:30%; margin-top:30px">Manage Branch</h4>
         <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group mb-3">
@@ -32,12 +32,12 @@
             <label asp-for="Status" class="control-label mb-2"></label>
             <select asp-for="Status" class="form-control">
                 <option value="open">Open</option>
-                <option value="close">Closed</option>
+                <option value="closed">Closed</option>
             </select>
             <span asp-validation-for="Status" class="text-danger"></span>
         </div>
         <div class="form-group" mb-3>
-            <input type="submit" value="Create" class="btn btn-primary" />
+            <input type="submit" value="Update" class="btn btn-primary" />
         </div>
     </form>
 </div>

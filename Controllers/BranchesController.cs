@@ -28,24 +28,6 @@ namespace ChealCore.Controllers
                         Problem("Entity set 'ApplicationDbContext.Branch'  is null.");
         }
 
-        // GET: Branches/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.Branch == null)
-            {
-                return NotFound();
-            }
-
-            var branch = await _context.Branch
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (branch == null)
-            {
-                return NotFound();
-            }
-
-            return View(branch);
-        }
-
         // GET: Branches/Create
         public IActionResult Create()
         {
@@ -68,8 +50,8 @@ namespace ChealCore.Controllers
             return View(branch);
         }
 
-        // GET: Branches/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        // GET: Branches/Manage/id
+        public async Task<IActionResult> Manage(int? id)
         {
             if (id == null || _context.Branch == null)
             {
@@ -84,12 +66,12 @@ namespace ChealCore.Controllers
             return View(branch);
         }
 
-        // POST: Branches/Edit/5
+        // POST: Branches/Manage/id
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,BranchName,Address,SortCode,Status")] Branch branch)
+        public async Task<IActionResult> Manage(int id, [Bind("Id,BranchName,Address,SortCode,Status")] Branch branch)
         {
             if (id != branch.Id)
             {
@@ -117,43 +99,6 @@ namespace ChealCore.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(branch);
-        }
-
-        //// GET: Branches/Delete/5
-        //public async Task<IActionResult> Delete(int? id)
-        //{
-        //    if (id == null || _context.Branch == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var branch = await _context.Branch
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (branch == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(branch);
-        //}
-
-        // POST: Branches/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Branch == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.Branch'  is null.");
-            }
-            var branch = await _context.Branch.FindAsync(id);
-            if (branch != null)
-            {
-                _context.Branch.Remove(branch);
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool BranchExists(int id)
