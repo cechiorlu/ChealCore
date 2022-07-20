@@ -56,8 +56,8 @@ namespace ChealCore.Controllers
             return View(gLCategory);
         }
 
-        // GET: GLCategories/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        // GET: GLCategories/Manage/5
+        public async Task<IActionResult> Manage(int? id)
         {
             if (id == null || _context.GLCategory == null)
             {
@@ -72,12 +72,12 @@ namespace ChealCore.Controllers
             return View(gLCategory);
         }
 
-        // POST: GLCategories/Edit/5
+        // POST: GLCategories/Manage/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CategoryId,CategoryName,CategoryDescription,CodeNumber,IsEnabled,mainAccountCategory")] GLCategory gLCategory)
+        public async Task<IActionResult> Manage(int id, [Bind("CategoryId,CategoryName,CategoryDescription,CodeNumber,IsEnabled,mainAccountCategory")] GLCategory gLCategory)
         {
             if (id != gLCategory.CategoryId)
             {
@@ -105,25 +105,6 @@ namespace ChealCore.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(gLCategory);
-        }
-
-        // POST: GLCategories/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.GLCategory == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.GLCategory'  is null.");
-            }
-            var gLCategory = await _context.GLCategory.FindAsync(id);
-            if (gLCategory != null)
-            {
-                _context.GLCategory.Remove(gLCategory);
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool GLCategoryExists(int id)

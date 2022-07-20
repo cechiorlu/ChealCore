@@ -24,12 +24,11 @@ namespace ChealCore.Models
         public long? CodeNumber { get; set; }
 
 
-        public bool IsEnabled { get; set; }
-
         [Display(Name = "Main Account Category")]
         [Required(ErrorMessage = "Please select a main GL Category")]
         public MainAccountCategory mainAccountCategory { get; set; }
 
+        public bool IsEnabled { get; set; }
     }
 }
 

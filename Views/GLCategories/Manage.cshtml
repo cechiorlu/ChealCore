@@ -8,7 +8,7 @@
     <div class="my-3">
         <a asp-action="Index" class="nav-link active px-0"><i class="bi bi-arrow-left"></i> Back</a>
     </div>
-    <form asp-action="Edit" class="mx-auto w-50">
+    <form asp-action="Manage" class="mx-auto w-50">
         <h4>Edit GL Category</h4>
         <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -28,11 +28,6 @@
             <input asp-for="CodeNumber" class="form-control" />
             <span asp-validation-for="CodeNumber" class="text-danger"></span>
         </div>
-        <div class="form-group form-check mb-3">
-            <label class="form-check-label">
-                <input class="form-check-input" role="switch" id="flexSwitchCheckDefault" asp-for="IsEnabled" /> @Html.DisplayNameFor(model => model.IsEnabled)
-            </label>
-        </div>
         <div class="form-group mb-3">
             <label asp-for="mainAccountCategory" class="control-label mb-2"></label>
             <select asp-for="mainAccountCategory" class="form-control">
@@ -44,6 +39,11 @@
 
             </select>
             <span asp-validation-for="mainAccountCategory" class="text-danger"></span>
+        </div>
+        <div class="form-group form-check mb-3">
+            <label class="form-check-label">
+                <input class="form-check-input" role="switch" id="flexSwitchCheckDefault" asp-for="IsEnabled" /> @Html.DisplayNameFor(model => model.IsEnabled)
+            </label>
         </div>
         <div class="form-group">
             <input type="submit" value="Save" class="btn btn-primary" />

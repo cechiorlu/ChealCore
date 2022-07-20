@@ -28,11 +28,6 @@
             <input asp-for="CodeNumber" class="form-control" disabled />
             <span asp-validation-for="CodeNumber" class="text-danger"></span>
         </div>
-        <div class="form-group form-check mb-3">
-            <label class="form-check-label mb-2">
-                <input class="form-check-input" role="switch" id="flexSwitchCheckDefault" asp-for="IsEnabled" type="checkbox" /> @Html.DisplayNameFor(model => model.IsEnabled)
-            </label>
-        </div>
         <div class="form-group mb-3">
             <label asp-for="mainAccountCategory" class="control-label mb-2"></label>
             <select asp-for="mainAccountCategory" class="form-control">
@@ -44,6 +39,11 @@
 
             </select>
             <span asp-validation-for="mainAccountCategory" class="text-danger"></span>
+        </div>
+        <div class="form-group form-check mb-3">
+            <label class="form-check-label mb-2">
+                <input class="form-check-input" role="switch" id="flexSwitchCheckDefault" asp-for="IsEnabled" type="checkbox" /> @Html.DisplayNameFor(model => model.IsEnabled)
+            </label>
         </div>
         <div class="form-group mb-4">
             <input type="submit" value="Create" class="btn btn-primary" />
