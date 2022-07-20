@@ -19,6 +19,7 @@
     <None Remove="Views\Branches\" />
     <None Remove="FluentValidation.AspNetCore" />
     <None Remove="Validation\" />
+    <None Remove="Views\TellerManager\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
@@ -56,5 +57,6 @@
     <Folder Include="Views\GLCategories\" />
     <Folder Include="Views\Branches\" />
     <Folder Include="Validation\" />
+    <Folder Include="Views\TellerManager\" />
   </ItemGroup>
 </Project>

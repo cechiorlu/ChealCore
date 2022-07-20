@@ -3,7 +3,7 @@ using ChealCore.Enums;
 using ChealCore.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace App.Logic
+namespace ChealCore.Logic
 {
     public class TilltoUserLogic
     {
