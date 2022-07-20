@@ -12,12 +12,12 @@ namespace ChealCore.Models
         [Required(ErrorMessage = ("Category Name is required")), MaxLength(40)]
         [Display(Name = "Category Name")]
         [DataType(DataType.Text)]
-        public string CategoryName { get; set; }
+        public string CategoryName { get; set; } = "";
 
         [Required(ErrorMessage = ("Please enter a description")), MaxLength(150)]
         [DataType(DataType.Text)]
         [Display(Name = "Category Description")]
-        public string CategoryDescription { get; set; }
+        public string CategoryDescription { get; set; } = "";
 
 
         [Display(Name = "Code")]

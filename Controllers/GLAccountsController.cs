@@ -26,25 +26,6 @@ namespace ChealCore.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: GLAccounts/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.GLAccount == null)
-            {
-                return NotFound();
-            }
-
-            var gLAccount = await _context.GLAccount
-                .Include(g => g.Branch)
-                .Include(g => g.GLCategory)
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (gLAccount == null)
-            {
-                return NotFound();
-            }
-
-            return View(gLAccount);
-        }
 
         // GET: GLAccounts/Create
         public IActionResult Create()
@@ -78,8 +59,8 @@ namespace ChealCore.Controllers
             return View(gLAccount);
         }
 
-        // GET: GLAccounts/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        // GET: GLAccounts/Manage/id
+        public async Task<IActionResult> Manage(int? id)
         {
             if (id == null || _context.GLAccount == null)
             {
@@ -96,12 +77,12 @@ namespace ChealCore.Controllers
             return View(gLAccount);
         }
 
-        // POST: GLAccounts/Edit/5
+        // POST: GLAccounts/Manage/id
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,AccountName,CodeNumber,AccountBalance,GLCategoryID,BranchID,IsActivated")] GLAccount gLAccount)
+        public async Task<IActionResult> Manage(int id, [Bind("ID,AccountName,CodeNumber,AccountBalance,GLCategoryID,BranchID,IsActivated")] GLAccount gLAccount)
         {
             if (id != gLAccount.ID)
             {
@@ -131,45 +112,6 @@ namespace ChealCore.Controllers
             ViewData["BranchID"] = new SelectList(_context.Branch, "Id", "Address", gLAccount.BranchID);
             ViewData["GLCategoryID"] = new SelectList(_context.GLCategory, "CategoryId", "CategoryDescription", gLAccount.GLCategoryID);
             return View(gLAccount);
-        }
-
-        // GET: GLAccounts/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.GLAccount == null)
-            {
-                return NotFound();
-            }
-
-            var gLAccount = await _context.GLAccount
-                .Include(g => g.Branch)
-                .Include(g => g.GLCategory)
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (gLAccount == null)
-            {
-                return NotFound();
-            }
-
-            return View(gLAccount);
-        }
-
-        // POST: GLAccounts/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.GLAccount == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.GLAccount'  is null.");
-            }
-            var gLAccount = await _context.GLAccount.FindAsync(id);
-            if (gLAccount != null)
-            {
-                _context.GLAccount.Remove(gLAccount);
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool GLAccountExists(int id)

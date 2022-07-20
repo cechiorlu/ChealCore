@@ -13,20 +13,20 @@ namespace ChealCore.Logic
             switch (mainAccountCategory)
             {
                 case MainAccountCategory.Asset:
-                    codeNumber = 1000 + Id;
+                    codeNumber = 1000000 + Id;
                     break;
 
                 case MainAccountCategory.Liability:
-                    codeNumber = 2000 + Id;
+                    codeNumber = 2000000 + Id;
                     break;
                 case MainAccountCategory.Income:
-                    codeNumber = 4000 + Id;
+                    codeNumber = 4000000 + Id;
                     break;
                 case MainAccountCategory.Capital:
-                    codeNumber = 3000 + Id;
+                    codeNumber = 3000000 + Id;
                     break;
                 case MainAccountCategory.Expenses:
-                    codeNumber = 5000 + Id;
+                    codeNumber = 5000000 + Id;
                     break;
                 default:
                     break;

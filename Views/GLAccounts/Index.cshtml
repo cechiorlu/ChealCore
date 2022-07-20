@@ -9,7 +9,7 @@
     <h4>GL Account Manager</h4>
     <hr />
     <button class="btn btn-primary">
-        <a asp-action="Create" style="text-decoration:none">Create New</a>
+        <a asp-action="Create" style="text-decoration:none">Create New Account</a>
     </button>
     <table class="table table-hover m-2">
         <thead>
@@ -55,68 +55,12 @@
                         @Html.DisplayFor(modelItem => item.Branch.Address)
                     </td>
                     <td>
-                        @* @Html.DisplayFor(modelItem => item.IsActivated)*@
                         @item.IsActivated
                     </td>
                     <td>
-                        <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                        <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                        @*<a asp-action="Delete" asp-route-id="@item.ID">Delete</a>*@
-                        <a id="delete-glaccount-trigger">Delete</a>
+                        <a asp-action="Manage" asp-route-id="@item.ID">Manage</a>
                     </td>
                 </tr>
-
-
-                <div id="delete-glaccount-modal" class="modal">
-                    <div class="modal-content">
-                        <span class="close" id="close-delete-glaccount-modal-btn">&times;</span>
-                        <h6 style="text-align:center">Are you sure you want to delete GL Account?</h6>
-                        <hr />
-                        <dl class="row">
-                            <dt class="col-sm-2">
-                                @Html.DisplayNameFor(modelItem => item.AccountName)
-                            </dt>
-                            <dd class="col-sm-10">
-                                @Html.DisplayFor(modelItem => item.AccountName)
-                            </dd>
-                            <dt class="col-sm-2">
-                                @Html.DisplayNameFor(modelItem => item.CodeNumber)
-                            </dt>
-                            <dd class="col-sm-10">
-                                @Html.DisplayFor(modelItem => item.CodeNumber)
-                            </dd>
-                            <dt class="col-sm-2">
-                                @Html.DisplayNameFor(modelItem => item.AccountBalance)
-                            </dt>
-                            <dd class="col-sm-10">
-                                @Html.DisplayFor(modelItem => item.AccountBalance)
-                            </dd>
-                            <dt class="col-sm-2">
-                                @Html.DisplayNameFor(modelitem => item.GLCategory)
-                            </dt>
-                            <dd class="col-sm-10">
-                                @Html.DisplayFor(modelItem => item.GLCategory.CategoryDescription)
-                            </dd>
-                            <dt class="col-sm-2">
-                                @Html.DisplayNameFor(modelItem => item.Branch)
-                            </dt>
-                            <dd class="col-sm-10">
-                                @Html.DisplayFor(modelItem => item.Branch.Address)
-                            </dd>
-                            <dt class="col-sm-2">
-                                @Html.DisplayNameFor(modelItem => item.IsActivated)
-                            </dt>
-                            <dd class="col-sm-10">
-                                @Html.DisplayFor(modelItem => item.IsActivated)
-                            </dd>
-                        </dl>
-
-                        <form class="form-group row mt-3 w-75 mx-auto" method="post" asp-action="Delete" asp-route-id="@item.ID">
-                            <a class="btn btn-success col-5" id="cancel-delete-glaccount">No</a>
-                            <button type="submit" class="btn btn-danger col-5 ms-auto">Yes</button>
-                        </form>
-                    </div>
-                </div>
             }
         </tbody>
     </table>
