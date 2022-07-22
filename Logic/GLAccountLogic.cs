@@ -10,7 +10,7 @@ namespace ChealCore.Logic
 
         public GLAccountLogic(ApplicationDbContext context)
         {
-            _context = context;
+            this._context = context;
         }
         public List<GLAccount> GetByMainCategory(MainAccountCategory mainCategory)
         {

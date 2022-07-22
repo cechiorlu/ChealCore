@@ -11,7 +11,7 @@ namespace ChealCore.Logic
 
         public AccountConfigLogic(ApplicationDbContext context)
         {
-            _context = context;
+            this._context = context;
         }
 
         public List<GLAccount> ExtractIncomeGLs()

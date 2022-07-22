@@ -58,5 +58,23 @@ namespace ChealCore.Logic
                 _context.SaveChanges();
             }
         }
+
+        public List<Transaction> GetTrialBalanceTransactions(DateTime startDate, DateTime endDate)
+        {
+            var result = new List<Transaction>();
+            if (startDate < endDate)
+            {
+                var allTransactions = _context.Transaction.ToList();
+                foreach (var item in allTransactions)
+                {
+                    if (item.Date.Date >= startDate && item.Date.Date <= endDate)
+                    {
+                        result.Add(item);
+                    }
+                }
+
+            }
+            return result;
+        }
     }
 }

@@ -13,7 +13,7 @@ namespace ChealCore.Logic
 
         public TellerPostingLogic(ApplicationDbContext context)
         {
-            _context = context;
+            this._context = context;
         }
 
         public string PostTeller(CustomerAccount account, GLAccount till, float amt, TellerPostingType pType)

@@ -12,7 +12,7 @@ namespace ChealCore.Logic
 
         public TilltoUserLogic(ApplicationDbContext context)
         {
-            _context = context;
+            this._context = context;
         }
         public List<GLAccount> GetAllTills()
         {
@@ -104,5 +104,10 @@ namespace ChealCore.Logic
         {
             return TillsWithoutTeller();
         }
+
+ 
+
+   
+
     }
 }
