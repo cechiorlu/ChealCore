@@ -21,6 +21,13 @@
     <None Remove="Validation\" />
     <None Remove="Views\TellerManager\" />
     <None Remove="Views\AccountConfigurations\" />
+    <None Remove="Views\Customers\" />
+    <None Remove="Views\CustomerAccounts\" />
+    <None Remove="Views\Transactions\" />
+    <None Remove="Views\GLPostings\" />
+    <None Remove="Views\TellerPostings\" />
+    <None Remove="Views\LoanAccounts\" />
+    <None Remove="Views\FinancialReports\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
@@ -60,5 +67,12 @@
     <Folder Include="Validation\" />
     <Folder Include="Views\TellerManager\" />
     <Folder Include="Views\AccountConfigurations\" />
+    <Folder Include="Views\Customers\" />
+    <Folder Include="Views\CustomerAccounts\" />
+    <Folder Include="Views\Transactions\" />
+    <Folder Include="Views\GLPostings\" />
+    <Folder Include="Views\TellerPostings\" />
+    <Folder Include="Views\LoanAccounts\" />
+    <Folder Include="Views\FinancialReports\" />
   </ItemGroup>
 </Project>

@@ -7,93 +7,90 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ChealCore.Data;
 using ChealCore.Models;
-using ChealCore.Logic;
 
-namespace ChealCore.Controllers
+namespace App.Controllers
 {
-    public class CustomersController : Controller
+    public class TransactionsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public CustomersController(ApplicationDbContext context)
+        public TransactionsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Customers
+        // GET: Transactions
         public async Task<IActionResult> Index()
         {
-            return _context.Customer != null ?
-                        View(await _context.Customer.ToListAsync()) :
-                        Problem("Entity set 'ApplicationDbContext.Customer'  is null.");
+            return _context.Transaction != null ?
+                        View(await _context.Transaction.ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.Transaction'  is null.");
         }
 
-        // GET: Customers/Details/5
+        // GET: Transactions/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Customer == null)
+            if (id == null || _context.Transaction == null)
             {
                 return NotFound();
             }
 
-            var customer = await _context.Customer
-                .FirstOrDefaultAsync(m => m.CustomerID == id);
-            if (customer == null)
+            var transaction = await _context.Transaction
+                .FirstOrDefaultAsync(m => m.ID == id);
+            if (transaction == null)
             {
                 return NotFound();
             }
 
-            return View(customer);
+            return View(transaction);
         }
 
-        // GET: Customers/Create
+        // GET: Transactions/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Customers/Create
+        // POST: Transactions/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CustomerID,FullName,Address,PhoneNumber,Email,Gender,IsActivated")] Customer customer)
+        public async Task<IActionResult> Create([Bind("ID,Amount,Date,AccountName,SubCategory,mainAccountCategory,TransactionType")] Transaction transaction)
         {
-
-
             if (ModelState.IsValid)
             {
-                _context.Add(customer);
+                _context.Add(transaction);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(customer);
+            return View(transaction);
         }
 
-        // GET: Customers/Edit/5
+        // GET: Transactions/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Customer == null)
+            if (id == null || _context.Transaction == null)
             {
                 return NotFound();
             }
 
-            var customer = await _context.Customer.FindAsync(id);
-            if (customer == null)
+            var transaction = await _context.Transaction.FindAsync(id);
+            if (transaction == null)
             {
                 return NotFound();
             }
-            return View(customer);
+            return View(transaction);
         }
 
-        // POST: Customers/Edit/5
+        // POST: Transactions/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CustomerID,FullName,Address,PhoneNumber,Email,Gender,IsActivated")] Customer customer)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Amount,Date,AccountName,SubCategory,mainAccountCategory,TransactionType")] Transaction transaction)
         {
-            if (id != customer.CustomerID)
+            if (id != transaction.ID)
             {
                 return NotFound();
             }
@@ -102,12 +99,12 @@ namespace ChealCore.Controllers
             {
                 try
                 {
-                    _context.Update(customer);
+                    _context.Update(transaction);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CustomerExists(customer.CustomerID))
+                    if (!TransactionExists(transaction.ID))
                     {
                         return NotFound();
                     }
@@ -118,49 +115,49 @@ namespace ChealCore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(customer);
+            return View(transaction);
         }
 
-        // GET: Customers/Delete/5
+        // GET: Transactions/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Customer == null)
+            if (id == null || _context.Transaction == null)
             {
                 return NotFound();
             }
 
-            var customer = await _context.Customer
-                .FirstOrDefaultAsync(m => m.CustomerID == id);
-            if (customer == null)
+            var transaction = await _context.Transaction
+                .FirstOrDefaultAsync(m => m.ID == id);
+            if (transaction == null)
             {
                 return NotFound();
             }
 
-            return View(customer);
+            return View(transaction);
         }
 
-        // POST: Customers/Delete/5
+        // POST: Transactions/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Customer == null)
+            if (_context.Transaction == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Customer'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Transaction'  is null.");
             }
-            var customer = await _context.Customer.FindAsync(id);
-            if (customer != null)
+            var transaction = await _context.Transaction.FindAsync(id);
+            if (transaction != null)
             {
-                _context.Customer.Remove(customer);
+                _context.Transaction.Remove(transaction);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CustomerExists(int id)
+        private bool TransactionExists(int id)
         {
-            return (_context.Customer?.Any(e => e.CustomerID == id)).GetValueOrDefault();
+            return (_context.Transaction?.Any(e => e.ID == id)).GetValueOrDefault();
         }
     }
 }

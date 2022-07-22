@@ -1,0 +1,78 @@
+﻿@model IEnumerable<ChealCore.Models.GLPosting>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>GL Postings Manager</h1>
+
+<bitton class="btn btn-info" style="float:right">
+    <a asp-action="Create">Create New</a>
+</bitton>
+<table class="table table-hover m-2">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CreditAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DebitAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Narration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DrGlAccount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CrGlAccount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PostInitiatorId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreditAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DebitAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Narration)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DrGlAccount.AccountName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CrGlAccount.AccountName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PostInitiatorId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">View Transaction</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
