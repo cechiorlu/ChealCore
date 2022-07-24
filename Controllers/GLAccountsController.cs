@@ -31,7 +31,7 @@ namespace ChealCore.Controllers
         public IActionResult Create()
         {
             ViewData["BranchID"] = new SelectList(_context.Branch, "Id", "Address");
-            ViewData["GLCategoryID"] = new SelectList(_context.GLCategory, "CategoryId", "CategoryDescription");
+            ViewData["GLCategoryID"] = new SelectList(_context.GLCategory, "CategoryId", "CategoryName");
             return View();
         }
 

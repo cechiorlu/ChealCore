@@ -232,7 +232,7 @@ namespace ChealCore.Controllers
                 }
             }
 
-            return RedirectToAction("Manage", new { Id = role.Id });
+            return RedirectToAction("Index");
         }
 
 

@@ -9,15 +9,13 @@ namespace ChealCore.Models
         public int CustomerID { get; set; }
 
         [Required]
-        [StringLength(225, ErrorMessage = "Customer's name can not be less than 7 letters", MinimumLength = 7)]
         [RegularExpression(@"^[ a-zA-Z]+$", ErrorMessage = "Full name should only contain characters and white spaces")]
         [Display(Name = "Full Name")]
         public string FullName { get; set; }
 
         [Required]
-        [StringLength(225)]
+        [StringLength(225, MinimumLength = 4)]
         [Display(Name = "Address")]
-        [MinLength(4)]
         public string Address { get; set; }
 
         [Required]
@@ -28,7 +26,6 @@ namespace ChealCore.Models
 
         [Required]
         [EmailAddress]
-        [StringLength(225, ErrorMessage = "Email Address cannot be less than 9 letters", MinimumLength = 9)]
         [Display(Name = "Email Address")]
         public string Email { get; set; }
 

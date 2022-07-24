@@ -215,7 +215,7 @@ namespace ChealCore.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Manage", new { Id = userId });
+            return RedirectToAction("Index");
         }
 
 
