@@ -35,7 +35,10 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
+                bool isClosed = item.Status.ToString() == "Closed";
+                string rowStyle = isClosed ? "table-light" : "";
+
+                <tr class=@rowStyle>
                     <td>
                         @Html.DisplayFor(modelItem => item.BranchName)
                     </td>
@@ -45,7 +48,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.SortCode)
                     </td>
-                    <td>
+                    <td class="disabled">
                         @Html.DisplayFor(modelItem => item.Status)
                     </td>
                     <td>

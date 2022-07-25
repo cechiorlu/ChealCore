@@ -10,14 +10,14 @@ using ChealCore.Models;
 using ChealCore.Logic;
 using ChealCore.Models.ViewModels;
 
-namespace ChealCore.Controllers
+namespace App.Controllers
 {
-    public class TellerManagerController : Controller
+    public class UserTillsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
 
-        public TellerManagerController(ApplicationDbContext context)
+        public UserTillsController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -40,14 +40,7 @@ namespace ChealCore.Controllers
 
                 if (info.GlAccountID == 0)
                 {
-                    entry = new TillToUserViewModel
-                    {
-                        Username = _context.Users.Find(info.UserId).UserName,
-                        GLAccountName = "NIL",
-                        AccountBalance = "NIL",
-                        HasDetails = false,
-                        IsDeletable = false
-                    };
+                    entry = new TillToUserViewModel { Username = _context.Users.Find(info.UserId).UserName, GLAccountName = "NIL", AccountBalance = "NIL", HasDetails = false, IsDeletable = false };
                 }
                 else
                 {
@@ -65,7 +58,6 @@ namespace ChealCore.Controllers
             return View(model);
         }
 
-      
         // GET: UserTills/Create
         public IActionResult Create()
 

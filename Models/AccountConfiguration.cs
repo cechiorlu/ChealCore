@@ -7,17 +7,18 @@ namespace ChealCore.Models
     {
         public int ID { get; set; }
 
-        [Display(Name = "Business Status")]
+        [Display(Name = "Business Status (Open)")]
         public bool IsBusinessOpen { get; set; }
 
+        [Display(Name = "Financial Date")]
         public DateTime FinancialDate { get; set; }
 
-        [Display(Name = "Savings Credit Interest Rate")]
+        [Display(Name = "Credit Interest Rate")]
         [Range(0, 100)]
         [RegularExpression(@"^[.0-9]+$", ErrorMessage = "Invalid input")]
         public double SavingsCreditInterestRate { get; set; }
 
-        [Display(Name = "Savings Minimum Balance")]
+        [Display(Name = "Minimum Balance")]
         [Range(0, (double)decimal.MaxValue)]
         [DataType(DataType.Currency)]
         [RegularExpression(@"^[.0-9]+$", ErrorMessage = "Invalid input for minimum balance")]
@@ -33,19 +34,19 @@ namespace ChealCore.Models
 
 
         //current account 
-        [Display(Name = "Current Credit Interest Rate")]
+        [Display(Name = "Credit Interest Rate")]
         [Range(0, 100)]
         [RegularExpression(@"^[.0-9]+$", ErrorMessage = "Invalid format")]
         public double CurrentCreditInterestRate { get; set; }
 
-        [Display(Name = "Current Minimum Balance")]
+        [Display(Name = "Minimum Balance")]
         [Range(0, (double)decimal.MaxValue)]
         [DataType(DataType.Currency)]
         [RegularExpression(@"^[.0-9]+$", ErrorMessage = "Invalid format")]
         public decimal CurrentMinimumBalance { get; set; }
 
         [DataType(DataType.Currency)]
-        [Display(Name = "COT")]
+        [Display(Name = "Commission on Turnover")]
         [Range(0.00, 1000.00)]
         [RegularExpression(@"^[.0-9]+$", ErrorMessage = "Invalid format")]
         public decimal CurrentCot { get; set; }        //Commission On Turnover
@@ -64,7 +65,7 @@ namespace ChealCore.Models
 
 
         //Loan account
-        [Display(Name = "Loan Debit Interest Rate")]
+        [Display(Name = "Debit Interest Rate")]
         [Range(0, 100)]
         [RegularExpression(@"^[.0-9]+$", ErrorMessage = "Invalid format")]
         public double LoanDebitInterestRate { get; set; }

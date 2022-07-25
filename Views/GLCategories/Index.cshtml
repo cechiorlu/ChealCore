@@ -38,9 +38,9 @@
         <tbody>
             @foreach (var item in Model)
             {
-                    @*string trStyle = item.IsEnabled ?*@
+                string rowStyle = item.IsEnabled ? "" : "table-light";
 
-                <tr class="disabled">
+                <tr class=@rowStyle>
                     <td>
                         @Html.DisplayFor(modelItem => item.CategoryName)
                     </td>
@@ -58,15 +58,15 @@
                     </td>
                     <td>
                         <a asp-action="Manage" asp-route-id="@item.CategoryId">Manage</a>
-                     
+
                     </td>
                 </tr>
-            }
-        </tbody>
-    </table>
-</div>
+                }
+            </tbody>
+        </table>
+    </div>
 
-@section Scripts {
-    <script src="~/js/deleteGLCategory.js"></script>
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @section Scripts {
+        <script src="~/js/deleteGLCategory.js"></script>
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

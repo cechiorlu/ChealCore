@@ -29,33 +29,6 @@ namespace App.Controllers
             return View(await applicationDbContext.FirstOrDefaultAsync());
         }
 
-        // GET: AccountConfigurations/Details/5
-        public async Task<IActionResult> Details()
-        {
-            var acctConfig = await _context.AccountConfiguration.FirstAsync();
-
-            if (acctConfig == null)
-            {
-                return NotFound();
-            }
-
-            //var accountConfiguration = await _context.AccountConfiguration
-            //    .Include(a => a.CurrentCotIncomeGl)
-            //    .Include(a => a.CurrentInterestExpenseGl)
-            //    .Include(a => a.CurrentInterestPayableGl)
-            //    .Include(a => a.LoanInterestExpenseGl)
-            //    .Include(a => a.LoanInterestIncomeGl)
-            //    .Include(a => a.LoanInterestReceivableGl)
-            //    .Include(a => a.SavingsInterestExpenseGl)
-            //    .Include(a => a.SavingsInterestPayableGl)
-            //    .FirstOrDefaultAsync(m => m.ID == id);
-            //if (accountConfiguration == null)
-            //{
-            //    return NotFound();
-            //}
-
-            return View(acctConfig);
-        }
 
         // GET: AccountConfigurations/Create
         public IActionResult Create()
@@ -80,6 +53,8 @@ namespace App.Controllers
         {
             if (!ModelState.IsValid)
             {
+                var financialDateUtc = DateTime.UtcNow;
+                accountConfiguration.FinancialDate = financialDateUtc;
                 _context.Add(accountConfiguration);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
