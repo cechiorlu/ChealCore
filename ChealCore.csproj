@@ -28,6 +28,7 @@
     <None Remove="Views\TellerPostings\" />
     <None Remove="Views\LoanAccounts\" />
     <None Remove="Views\FinancialReports\" />
+    <None Remove="Validation\Logic\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />

@@ -3,6 +3,7 @@
     ViewData["Title"] = "Role Manager";
     Layout = "~/Views/Shared/_Layout.cshtml";
     int i = 1;
+    @*var ErrorMessage = ViewData.ModelState["RoleInputName"].Errors[0].ErrorMessage;*@
 }
 
 <div class="container mt-4">
@@ -10,8 +11,8 @@
     <hr />
     <form method="post" asp-action="AddRole" asp-controller="RoleManager">
         <div class="form-group">
-            <span asp-validation-for="InputName.RoleName"></span>
-            <input asp-for="InputName.RoleName" class="form-control w-25 mb-2" />
+            <input asp-for="InputName" class="form-control w-25 mb-2" />
+            <p class="text-danger">@TempData["ErrorMessage"]</p>
             <button class="btn btn-primary" type="submit">
                 <i class="bi bi-folder-plus px-2"></i>
                 Add New Role

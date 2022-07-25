@@ -9,10 +9,12 @@ namespace ChealCore.Models.ViewModels
     {
         [Required]
         [Display(Name = "Role Name")]
-        [Unique(typeof(RoleInput))]
-        public RoleInput InputName { get; set; } = new RoleInput();
+        //[Unique(typeof(RoleInput))]
+        public string InputName { get; set; } = "";
 
         public List<IdentityRole> Roles { get; set; } = new List<IdentityRole>();
+
+        //public string ErrorMessage { get; set; } = "";
     }
 
     public class RoleInput

@@ -43,12 +43,30 @@ namespace ChealCore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddRole(CreateRolesViewModel createRolesViewModel)
         {
-            if (ModelState.IsValid)
+            if (String.IsNullOrEmpty(createRolesViewModel.InputName))
             {
-                await _roleManager.CreateAsync(new IdentityRole(createRolesViewModel.InputName.RoleName.Trim()));
+                TempData["ErrorMessage"] = "Rolename cannot be blank";
                 return RedirectToAction("Index");
             }
-            return NotFound();
+
+            var roles = await _roleManager.Roles.ToListAsync();
+            string inputName = createRolesViewModel.InputName.Trim().ToUpper();
+            List<string> rolenames = new();
+
+            roles.ForEach(role => rolenames.Add(role.NormalizedName));
+
+            bool roleExists = rolenames.Contains(inputName);
+
+            if (roleExists)
+            {
+                TempData["ErrorMessage"] = "Rolename already in use";
+            }
+            else if (ModelState.IsValid)
+            {
+                await _roleManager.CreateAsync(new IdentityRole(createRolesViewModel.InputName.Trim()));
+                TempData["ErrorMessage"] = "";
+            }
+            return RedirectToAction("Index");
         }
 
         // GET: /RoleManager/Manage/role.ID

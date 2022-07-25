@@ -12,8 +12,9 @@ namespace ChealCore.Logic
 
         public TilltoUserLogic(ApplicationDbContext context)
         {
-            this._context = context;
+            _context = context;
         }
+
         public List<GLAccount> GetAllTills()
         {
 

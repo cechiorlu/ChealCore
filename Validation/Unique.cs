@@ -16,23 +16,27 @@ namespace ChealCore.Validation
             ObjectType = type;
         }
 
+        //public async Task<CreateRolesViewModel> CreateRoleModel()
+        //{
 
+        //    return await r.GetRolesViewModel();
+        //}
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             // role input
             if (ObjectType == typeof(RoleInput))
             {
-                //DbContext db = new ApplicationDbContext();
 
-                var roles = new List<string>();
+                //var model = CreateRoleModel();
+                //var roles = model.Result.Roles ?? new List<IdentityRole>();
 
-                var role = roles.FirstOrDefault(u => u.Contains(((RoleInput)value).RoleName));
+                //var role = roles.FirstOrDefault(u => u.NormalizedName == value.ToString().ToUpper());
 
-                if (String.IsNullOrEmpty(role))
-                    return ValidationResult.Success;
-                else
-                    return new ValidationResult("Role already exists");
+                //if (role == null)
+                //    return ValidationResult.Success;
+                //else
+                //    return new ValidationResult("Role already exists");
             }
 
             //// gl category input
