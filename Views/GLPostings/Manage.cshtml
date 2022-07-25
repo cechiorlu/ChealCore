@@ -1,71 +1,40 @@
 ﻿@model ChealCore.Models.GLPosting
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Manage";
 }
 
-<h1>Edit</h1>
-
-<h4>GlPosting</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ID" />
-            <div class="form-group">
-                <label asp-for="CreditAmount" class="control-label"></label>
-                <input asp-for="CreditAmount" class="form-control" />
-                <span asp-validation-for="CreditAmount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DebitAmount" class="control-label"></label>
-                <input asp-for="DebitAmount" class="form-control" />
-                <span asp-validation-for="DebitAmount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Narration" class="control-label"></label>
-                <textarea asp-for="Narration" class="form-control"></textarea>
-                <span asp-validation-for="Narration" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DrGlAccountID" class="control-label"></label>
-                <select asp-for="DrGlAccountID" class="form-control" asp-items="ViewBag.DrGlAccountID"></select>
-                <span asp-validation-for="DrGlAccountID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CrGlAccountID" class="control-label"></label>
-                <select asp-for="CrGlAccountID" class="form-control" asp-items="ViewBag.CrGlAccountID"></select>
-                <span asp-validation-for="CrGlAccountID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PostInitiatorId" class="control-label"></label>
-                <input asp-for="PostInitiatorId" class="form-control" />
-                <span asp-validation-for="PostInitiatorId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <select asp-for="Status" class="form-control">
-                    <option value="Approved">Approved</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Declined">Declined</option>
-                </select>
-                <span asp-validation-for="Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+<div class="container">
+    <div class="my-3">
+        <a asp-action="Index" class="nav-link active px-0"><i class="bi bi-arrow-left"></i> Back</a>
     </div>
-</div>
+    <form asp-action="Manage" class="mx-auto w-50">
+        <h4>Manage Post Status</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="ID" />
+        <input asp-for="DebitAmount" class="form-control" hidden/>
+        <input asp-for="CreditAmount" class="form-control" hidden/>
+        <textarea asp-for="Narration" class="form-control" hidden></textarea>
+        <input asp-for="Date" class="form-control" hidden/>
+        <select asp-for="DrGlAccountID" class="form-control" asp-items="ViewBag.DrGlAccountID" hidden></select>
+        <select asp-for="CrGlAccountID" class="form-control" asp-items="ViewBag.CrGlAccountID" hidden></select>
+        <input asp-for="PostInitiatorId" class="form-control" hidden />
 
-<div>
-    <a asp-action="Index">Back to List</a>
+
+        <div class="form-group mb-3">
+            <label asp-for="Status" class="control-labe my-2l"></label>
+            <select asp-for="Status" class="form-control">
+                <option value="Approved">Approved</option>
+                <option value="Pending">Pending</option>
+                <option value="Declined">Declined</option>
+            </select>
+            <span asp-validation-for="Status" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+    </form>
 </div>
 
 @section Scripts {

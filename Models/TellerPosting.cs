@@ -21,6 +21,7 @@ namespace ChealCore.Models
         public DateTime? Date { get; set; }
 
         [Required(ErrorMessage = "Posting type required")]
+        [Display(Name = "Posting Type")]
         public TellerPostingType PostingType { get; set; }
 
         [Display(Name = "Account")]

@@ -181,13 +181,42 @@ namespace ChealCore.Areas.Identity.Pages.Account
         {
             try
             {
-                byte[] result = new byte[8];
-                for (int index = 0; index < 8; index++)
+                byte[] specialCharacters = new byte[2];
+                byte[] numbers = new byte[2];
+                byte[] upperCaseLetters = new byte[2];
+                byte[] lowercaseLetters = new byte[2];
+                string result = "";
+
+                for (int i = 0; i < 2; i++)
                 {
-                    result[index] = (byte)new Random().Next(33, 126);
+                    specialCharacters[i] = (byte)new Random().Next(33, 47);
                 }
-                return Encoding.ASCII.GetString(result);
+
+                for (int i = 0; i < 2; i++)
+                {
+                    numbers[i] = (byte)new Random().Next(48, 57);
+                }
+
+                for (int i = 0; i < 2; i++)
+                {
+                    upperCaseLetters[i] = (byte)new Random().Next(65, 90);
+                }
+
+                for (int i = 0; i < 2; i++)
+                {
+                    lowercaseLetters[i] = (byte)new Random().Next(97, 122);
+                }
+
+                string s = Encoding.ASCII.GetString(specialCharacters)
+                    + Encoding.ASCII.GetString(numbers)
+                    + Encoding.ASCII.GetString(upperCaseLetters)
+                    + Encoding.ASCII.GetString(lowercaseLetters);
+
+                result = new string(s.ToCharArray().OrderBy(x => Guid.NewGuid()).ToArray());
+
+                return result;
             }
+
             catch (Exception ex)
             {
                 throw new Exception(ex.Message, ex);

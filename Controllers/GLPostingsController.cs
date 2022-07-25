@@ -16,7 +16,7 @@ namespace ChealCore.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        BusinessLogic busLogic = new BusinessLogic();
+        BusinessLogic businessLogic = new BusinessLogic();
 
         public GLPostingsController(ApplicationDbContext context)
         {
@@ -29,26 +29,6 @@ namespace ChealCore.Controllers
 
             var applicationDbContext = _context.GLPosting.Include(g => g.CrGlAccount).Include(g => g.DrGlAccount);
             return View(await applicationDbContext.ToListAsync());
-        }
-
-        // GET: GlPostings/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.GLPosting == null)
-            {
-                return NotFound();
-            }
-
-            var glPosting = await _context.GLPosting
-                .Include(g => g.CrGlAccount)
-                .Include(g => g.DrGlAccount)
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (glPosting == null)
-            {
-                return NotFound();
-            }
-
-            return View(glPosting);
         }
 
         // GET: GlPostings/Create
@@ -77,33 +57,24 @@ namespace ChealCore.Controllers
                     if ((decimal)crAct.AccountBalance < glPosting.CreditAmount)
                     {
                         Problem("Insufficient funds in asset account to be credited");
-                        return View("NotFound");
+                        return View("InsufficientFunds");
                     }
                 }
-                glPosting.Date = DateTime.Now;
+                DateTime postingDate = glPosting.Date.ToUniversalTime();
+                glPosting.Date = postingDate;
                 glPosting.CreditAmount = glPosting.DebitAmount;
 
 
                 if (!(drAct.AccountBalance > (float)glPosting.DebitAmount))
                 {
                     Problem("There is not enough funds in the account to be debited");
-                    return View("NotFound");
+                    return View("InsufficientFunds");
                 }
                 else
                 {
                     crAct.AccountBalance += (float)glPosting.CreditAmount;
                     drAct.AccountBalance -= (float)glPosting.DebitAmount;
                 }
-
-                //var transaction = new Transaction
-                //{
-                //    Amount = glPosting.CreditAmount,
-                //    Date = DateTime.Now,
-                //    AccountName = drAct.AccountName,
-                //    SubCategory = drAct.GLCategory.CategoryName.ToString(),
-                //    mainAccountCategory = drAct.GLCategory.mainAccountCategory
-
-                //};
 
                 _context.Add(glPosting);
                 await _context.SaveChangesAsync();
@@ -114,8 +85,8 @@ namespace ChealCore.Controllers
             return View(glPosting);
         }
 
-        // GET: GlPostings/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        // GET: GlPostings/Manage/id
+        public async Task<IActionResult> Manage(int? id)
         {
             if (id == null || _context.GLPosting == null)
             {
@@ -132,12 +103,12 @@ namespace ChealCore.Controllers
             return View(glPosting);
         }
 
-        // POST: GlPostings/Edit/5
+        // POST: GlPostings/Manage/id
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,CreditAmount,DebitAmount,Narration,Date,DrGlAccountID,CrGlAccountID,PostInitiatorId,Status")] GLPosting glPosting)
+        public async Task<IActionResult> Manage(int id, [Bind("ID,CreditAmount,DebitAmount,Narration,Date,DrGlAccountID,CrGlAccountID,PostInitiatorId,Status")] GLPosting glPosting)
         {
             if (id != glPosting.ID)
             {
@@ -148,6 +119,8 @@ namespace ChealCore.Controllers
             {
                 try
                 {
+                    DateTime postingDate = glPosting.Date.ToUniversalTime();
+                    glPosting.Date = postingDate;
                     _context.Update(glPosting);
                     await _context.SaveChangesAsync();
                 }
@@ -167,45 +140,6 @@ namespace ChealCore.Controllers
             ViewData["CrGlAccountID"] = new SelectList(_context.GLAccount, "ID", "AccountName", glPosting.CrGlAccountID);
             ViewData["DrGlAccountID"] = new SelectList(_context.GLAccount, "ID", "AccountName", glPosting.DrGlAccountID);
             return View(glPosting);
-        }
-
-        // GET: GlPostings/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.GLPosting == null)
-            {
-                return NotFound();
-            }
-
-            var glPosting = await _context.GLPosting
-                .Include(g => g.CrGlAccount)
-                .Include(g => g.DrGlAccount)
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (glPosting == null)
-            {
-                return NotFound();
-            }
-
-            return View(glPosting);
-        }
-
-        // POST: GlPostings/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.GLPosting == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.GlPosting'  is null.");
-            }
-            var glPosting = await _context.GLPosting.FindAsync(id);
-            if (glPosting != null)
-            {
-                _context.GLPosting.Remove(glPosting);
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool GlPostingExists(int id)

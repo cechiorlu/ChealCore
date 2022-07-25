@@ -60,7 +60,7 @@ namespace ChealCore.Controllers
         {
             ViewData["CustomerAccountID"] = new SelectList(_context.CustomerAccount, "Id", "AccountName");
             ViewData["GLAccountID"] = new SelectList(_context.GLAccount.Where(a => a.AccountName.ToLower() == "till").ToList(), "ID", "AccountName");
-            //ViewData["GLAccountID"] = new SelectList(_context.GLAccount, "ID", "AccountName");
+            ViewData["GLAccountID"] = new SelectList(_context.GLAccount, "ID", "AccountName");
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName");
             return View();
         }
@@ -86,7 +86,7 @@ namespace ChealCore.Controllers
                 if (!tellerHasTill)
                 {
                     Problem("No till associated with logged in teller");
-                    return NotFound();
+                    tellerPosting.Status = PostStatus.Declined;
                 }
                 // get user's till and do the necessary calculation
                 tellerPosting.UserId = userId;
@@ -112,7 +112,7 @@ namespace ChealCore.Controllers
                         if (!((decimal)tillAcct.AccountBalance >= amt))
                         {
                             Problem("Insufficient funds in till account");
-                            return View("NotFound");
+                            tellerPosting.Status = PostStatus.Declined;
                         }
                         tellerPosting.Status = PostStatus.Approved;
 
@@ -120,7 +120,7 @@ namespace ChealCore.Controllers
                         if (!result.Equals("success"))
                         {
                             Problem(result);
-                            return View("NotFound");
+                            tellerPosting.Status = PostStatus.Declined;
                         }
 
                         _context.Entry(custAcct).State = EntityState.Modified;
@@ -132,7 +132,7 @@ namespace ChealCore.Controllers
                     else
                     {
                         Problem("Insufficient funds in customer account");
-                        return View("NotFound");
+                        tellerPosting.Status = PostStatus.Declined;
                     }
 
                 }
@@ -164,103 +164,6 @@ namespace ChealCore.Controllers
             return View(tellerPosting);
         }
 
-        // GET: TellerPostings/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _context.TellerPosting == null)
-            {
-                return NotFound();
-            }
-
-            var tellerPosting = await _context.TellerPosting.FindAsync(id);
-            if (tellerPosting == null)
-            {
-                return NotFound();
-            }
-            ViewData["CustomerAccountID"] = new SelectList(_context.CustomerAccount, "Id", "AccountName", tellerPosting.CustomerAccountID);
-            ViewData["GLAccountID"] = new SelectList(_context.GLAccount, "ID", "AccountName", tellerPosting.GLAccountID);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName", tellerPosting.UserId);
-            return View(tellerPosting);
-        }
-
-        // POST: TellerPostings/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Amount,Narration,Date,PostingType,CustomerAccountID,UserId,GLAccountID,Status")] TellerPosting tellerPosting)
-        {
-            if (id != tellerPosting.ID)
-            {
-                return NotFound();
-            }
-
-            if (!ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(tellerPosting);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TellerPostingExists(tellerPosting.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["CustomerAccountID"] = new SelectList(_context.CustomerAccount, "Id", "AccountName", tellerPosting.CustomerAccountID);
-            ViewData["GLAccountID"] = new SelectList(_context.GLAccount, "ID", "AccountName", tellerPosting.GLAccountID);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName", tellerPosting.UserId);
-            return View(tellerPosting);
-        }
-
-        // GET: TellerPostings/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.TellerPosting == null)
-            {
-                return NotFound();
-            }
-
-            var tellerPosting = await _context.TellerPosting
-                .Include(t => t.CustomerAccount)
-                .Include(t => t.TillAccount)
-                .Include(t => t.User)
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (tellerPosting == null)
-            {
-                return NotFound();
-            }
-
-            return View(tellerPosting);
-        }
-
-        // POST: TellerPostings/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.TellerPosting == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.TellerPosting'  is null.");
-            }
-            var tellerPosting = await _context.TellerPosting.FindAsync(id);
-            if (tellerPosting != null)
-            {
-                _context.TellerPosting.Remove(tellerPosting);
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
         private bool TellerPostingExists(int id)
         {
             return (_context.TellerPosting?.Any(e => e.ID == id)).GetValueOrDefault();
@@ -269,39 +172,6 @@ namespace ChealCore.Controllers
         [HttpGet]
         public IActionResult VerifyCustomer()
         {
-            return View();
-        }
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> VerifyCustomer(VerifyCustomerViewModel verifyCustomerViewModel)
-        {
-            try
-            {
-                var acctNum = _context.CustomerAccount.Where(a => a.AccountNumber == verifyCustomerViewModel.AccountNumber).First();
-                if (acctNum != null)
-                {
-
-
-                    ViewBag.AccountName = acctNum.AccountName;
-                    ViewBag.AccountType = acctNum.Accounttype;
-                    ViewBag.AccountNumber = acctNum.AccountNumber;
-                    ViewBag.CustomerId = acctNum.CustomerID;
-                    ViewBag.DateOpened = acctNum.DateOpened;
-                    ViewBag.AccountBalance = acctNum.AccountBalance;
-                    ViewBag.IsActivated = acctNum.IsActivated;
-
-
-                    return View(verifyCustomerViewModel);
-                }
-
-            }
-            catch
-            {
-                return View();
-            }
-
             return View();
         }
 

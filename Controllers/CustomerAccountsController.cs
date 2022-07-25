@@ -94,6 +94,8 @@ namespace App.Controllers
             {
                 try
                 {
+                    DateTime dateOpened = customerAccount.DateOpened.ToUniversalTime();
+                    customerAccount.DateOpened = dateOpened;
                     _context.Update(customerAccount);
                     await _context.SaveChangesAsync();
                 }

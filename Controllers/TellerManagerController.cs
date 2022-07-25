@@ -65,26 +65,7 @@ namespace ChealCore.Controllers
             return View(model);
         }
 
-        //// GET: UserTills/Details/5
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null || _context.UserTill == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var userTill = await _context.UserTill
-        //        .Include(u => u.GLAccount)
-        //        .Include(u => u.User)
-        //        .FirstOrDefaultAsync(m => m.ID == id);
-        //    if (userTill == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(userTill);
-        //}
-
+      
         // GET: UserTills/Create
         public IActionResult Create()
 
@@ -189,45 +170,7 @@ namespace ChealCore.Controllers
             return View(userTill);
         }
 
-        //// GET: UserTills/Delete/5
-        //public async Task<IActionResult> Delete(int? id)
-        //{
-        //    if (id == null || _context.UserTill == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var userTill = await _context.UserTill
-        //        .Include(u => u.GLAccount)
-        //        .Include(u => u.User)
-        //        .FirstOrDefaultAsync(m => m.ID == id);
-        //    if (userTill == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(userTill);
-        //}
-
-        //// POST: UserTills/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(int id)
-        //{
-        //    if (_context.UserTill == null)
-        //    {
-        //        return Problem("Entity set 'ApplicationDbContext.UserTill'  is null.");
-        //    }
-        //    var userTill = await _context.UserTill.FindAsync(id);
-        //    if (userTill != null)
-        //    {
-        //        _context.UserTill.Remove(userTill);
-        //    }
-
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
-
+       
         private bool UserTillExists(int id)
         {
             return (_context.UserTill?.Any(e => e.ID == id)).GetValueOrDefault();

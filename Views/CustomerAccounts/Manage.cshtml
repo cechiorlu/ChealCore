@@ -43,6 +43,8 @@
             </select>
             <span asp-validation-for="Accounttype" class="text-danger"></span>
         </div>
+        <input asp-for="DateOpened" class="form-control" hidden />
+
         <div class="form-group form-check mb-3">
             <label class="form-check-label">
                 <input class="form-check-input" asp-for="IsActivated" /> @Html.DisplayNameFor(model => model.IsActivated)
