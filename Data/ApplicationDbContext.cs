@@ -34,7 +34,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
     public DbSet<Transaction>? Transaction { get; set; }
 
-    //public DbSet<LoanAccount>? LoanAccount { get; set; }
+    public DbSet<LoanAccount>? LoanAccount { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

@@ -3,6 +3,7 @@ using System;
 using ChealCore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ChealCore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220726082743_SetupLoanAccounts")]
+    partial class SetupLoanAccounts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -387,52 +389,6 @@ namespace ChealCore.Migrations
                     b.ToTable("GLPosting", "Identity");
                 });
 
-            modelBuilder.Entity("ChealCore.Models.LoanAccount", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("AccountName")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("character varying(40)");
-
-                    b.Property<int>("BranchID")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("CustomerAccountId")
-                        .HasColumnType("integer");
-
-                    b.Property<double?>("InterestRate")
-                        .IsRequired()
-                        .HasColumnType("double precision");
-
-                    b.Property<decimal>("LoanAmount")
-                        .HasColumnType("numeric");
-
-                    b.Property<int>("LoanTerms")
-                        .HasColumnType("integer");
-
-                    b.Property<double>("NumberOfYears")
-                        .HasColumnType("double precision");
-
-                    b.Property<string>("ServicingAccountNumber")
-                        .IsRequired()
-                        .HasMaxLength(11)
-                        .HasColumnType("character varying(11)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BranchID");
-
-                    b.HasIndex("CustomerAccountId");
-
-                    b.ToTable("LoanAccount", "Identity");
-                });
-
             modelBuilder.Entity("ChealCore.Models.TellerPosting", b =>
                 {
                     b.Property<int>("ID")
@@ -761,25 +717,6 @@ namespace ChealCore.Migrations
                     b.Navigation("CrGlAccount");
 
                     b.Navigation("DrGlAccount");
-                });
-
-            modelBuilder.Entity("ChealCore.Models.LoanAccount", b =>
-                {
-                    b.HasOne("ChealCore.Models.Branch", "branch")
-                        .WithMany()
-                        .HasForeignKey("BranchID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ChealCore.Models.CustomerAccount", "CustomerAccount")
-                        .WithMany()
-                        .HasForeignKey("CustomerAccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CustomerAccount");
-
-                    b.Navigation("branch");
                 });
 
             modelBuilder.Entity("ChealCore.Models.TellerPosting", b =>

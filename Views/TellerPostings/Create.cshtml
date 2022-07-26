@@ -9,22 +9,28 @@
     <div class="my-3">
         <a asp-action="Index" class="nav-link active px-0"><i class="bi bi-arrow-left"></i> Back</a>
     </div>
-    <form asp-action="Create" class="w-50 mx-auto">
-        <h4>Create Transaction</h4>
+
+    <form asp-action="Create" class="mx-auto w-50">
+        <h4>Post Transaction</h4>
         <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group mb-2">
-            <label asp-for="Amount" class="control-label my-1"></label>
+        <div class="form-group" style="margin-bottom:10px">
+            <label asp-for="Amount" class="control-label"></label>
             <input asp-for="Amount" class="form-control" />
             <span asp-validation-for="Amount" class="text-danger"></span>
         </div>
-        <div class="form-group mb-2">
-            <label asp-for="Narration" class="control-label my-1"></label>
+        <div class="form-group" style="margin-bottom:10px">
+            <label asp-for="Narration" class="control-label"></label>
             <textarea asp-for="Narration" class="form-control"></textarea>
             <span asp-validation-for="Narration" class="text-danger"></span>
         </div>
-        <div class="form-group mb-2">
-            <label asp-for="PostingType" class="control-label my-1"></label>
+        @*  <div class="form-group" style="margin-bottom:10px">
+            <label asp-for="Date" class="control-label"></label>
+            <input asp-for="Date" class="form-control" />
+            <span asp-validation-for="Date" class="text-danger"></span>
+        </div>*@
+        <div class="form-group" style="margin-bottom:10px">
+            <label asp-for="PostingType" class="control-label"></label>
             <select asp-for="PostingType" class="form-control">
                 <option value="Deposit">Deposit</option>
                 <option value="Withdrawal">Withdrawal</option>
@@ -32,12 +38,20 @@
             <span asp-validation-for="PostingType" class="text-danger"></span>
         </div>
 
-        <div class="form-group mb-2">
-            <label asp-for="CustomerAccountID" class="control-label my-1"></label>
+        <div class="form-group" style="margin-bottom:10px">
+            <label asp-for="CustomerAccountID" class="control-label"></label>
             <select asp-for="CustomerAccountID" class="form-control" asp-items="ViewBag.CustomerAccountID"></select>
         </div>
-        <div class="form-group mb-2">
-            <label asp-for="Status" class="control-label my-1"></label>
+        @* <div class="form-group" style="margin-bottom:10px">
+            <label asp-for="UserId" class="control-label"></label>
+            <select asp-for="UserId" class ="form-control" asp-items="ViewBag.UserId"></select>
+        </div>*@
+        @*  <div class="form-group" style="margin-bottom:10px">
+            <label asp-for="GLAccountID" class="control-label"></label>
+            <select asp-for="GLAccountID" class ="form-control" asp-items="ViewBag.GLAccountID"></select>
+        </div>*@
+        <div class="form-group" style="margin-bottom:10px">
+            <label asp-for="Status" class="control-label"></label>
             <select asp-for="Status" class="form-control">
                 <option value="Approved">Approved</option>
                 <option value="Pending">Pending</option>
@@ -45,12 +59,14 @@
             </select>
             <span asp-validation-for="Status" class="text-danger"></span>
         </div>
-        <div class="form-group">
+        <div class="form-group" style="margin-bottom:10px">
             <input type="submit" value="Create" class="btn btn-primary" />
         </div>
     </form>
-</div>
+        </div>
+    </div>
 
+</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

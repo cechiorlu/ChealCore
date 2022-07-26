@@ -3,78 +3,79 @@
 @{
     ViewData["Title"] = "Index";
 }
-<br />
-<button class="btn btn-secondary" style="float:right">
-    <a asp-action="Create">Create New</a>
-</button>
 
-<br />
-<h3> Loan Account Management</h3>
-<table class="table table-hover m-2">
+<div class="container mt-5">
+    <h4>Loan Accounts Manager</h4>
+    <hr />
+    <button class="btn btn-primary">
+        <a asp-action="create" style="text-decoration:none">
+            Create Loan Account
+        </a>
+    </button>
+    <table class="table table-hover m-2">
 
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CustomerAccount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AccountName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LoanAmount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LoanTerms)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NumberOfYears)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.InterestRate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ServicingAccountNumber)
-            </th>
-            <th>
-                Branch
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CustomerAccount.AccountName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AccountName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LoanAmount)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LoanTerms)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NumberOfYears)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.InterestRate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ServicingAccountNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.branch.Address)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.CustomerAccount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AccountName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LoanAmount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LoanTerms)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NumberOfYears)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.InterestRate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ServicingAccountNumber)
+                </th>
+                <th>
+                    Branch
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CustomerAccount.AccountName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AccountName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LoanAmount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LoanTerms)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumberOfYears)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.InterestRate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ServicingAccountNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.branch.Address)
+                    </td>
+                    <td>
+                        <a asp-action="Manage" asp-route-id="@item.Id">Manage</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

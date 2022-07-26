@@ -19,7 +19,7 @@ namespace ChealCore.Logic
         {
 
 
-            return _context.GLAccount.Where(x => x.AccountName.ToLower().Contains("till") && x.GLCategory.CategoryName.ToLower() == "cash asset").ToList();
+            return _context.GLAccount.Where(x => x.AccountName.ToLower().Contains("till") && x.GLCategory.CategoryName.ToLower() == "cash assets").ToList();
         }
 
         public List<GLAccount> TillsWithoutTeller()

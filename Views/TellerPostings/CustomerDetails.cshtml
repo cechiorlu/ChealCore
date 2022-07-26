@@ -1,0 +1,26 @@
+﻿@*@model App.ViewModels.CustomerDetailsViewModel
+
+
+ <div class="col-md-6 m-2" style="margin-left:10%">
+
+    @if(Model == null)
+    {
+        <h2>You do not have an account!</h2>
+    }
+    else
+        {
+
+          <p>@Html.DisplayNameFor(model => model.CustomerID) : @Html.DisplayFor(model => model.CustomerID)</p>
+               <p>@Html.DisplayNameFor(model => model.AccountName) : @Html.DisplayFor(model => model.AccountName)</p>
+              <p>@Html.DisplayNameFor(model => model.AccountNumber) : @Html.DisplayFor(model => model.AccountNumber)</p>
+              <p>@Html.DisplayNameFor(model => model.Accounttype) : @Html.DisplayFor(model => model.Accounttype)</p>
+              <p>@Html.DisplayNameFor(model => model.DateOpened) : @Html.DisplayFor(model => model.DateOpened)</p>
+              <p>@Html.DisplayNameFor(model => model.IsActivated) :  @Html.DisplayFor(model => model.IsActivated)</p>
+    }
+      
+    </div>*@
+
+<div class="container mt-5">
+    <a class="m-2" asp-action="verifycustomer">Back to verify page</a>
+    <p>Customer ID : @ViewBag.CustomerId</p>
+</div>

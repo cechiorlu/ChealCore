@@ -10,7 +10,7 @@ using ChealCore.Models;
 using ChealCore.Logic;
 using ChealCore.Models.ViewModels;
 
-namespace App.Controllers
+namespace ChealCore.Controllers
 {
     public class UserTillsController : Controller
     {

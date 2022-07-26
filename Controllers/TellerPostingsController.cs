@@ -34,33 +34,12 @@ namespace ChealCore.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: TellerPostings/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.TellerPosting == null)
-            {
-                return NotFound();
-            }
-
-            var tellerPosting = await _context.TellerPosting
-                .Include(t => t.CustomerAccount)
-                .Include(t => t.TillAccount)
-                .Include(t => t.User)
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (tellerPosting == null)
-            {
-                return NotFound();
-            }
-
-            return View(tellerPosting);
-        }
-
         // GET: TellerPostings/Create
         public IActionResult Create()
         {
             ViewData["CustomerAccountID"] = new SelectList(_context.CustomerAccount, "Id", "AccountName");
             ViewData["GLAccountID"] = new SelectList(_context.GLAccount.Where(a => a.AccountName.ToLower() == "till").ToList(), "ID", "AccountName");
-            ViewData["GLAccountID"] = new SelectList(_context.GLAccount, "ID", "AccountName");
+            //ViewData["GLAccountID"] = new SelectList(_context.GLAccount, "ID", "AccountName");
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "UserName");
             return View();
         }
@@ -86,7 +65,7 @@ namespace ChealCore.Controllers
                 if (!tellerHasTill)
                 {
                     Problem("No till associated with logged in teller");
-                    tellerPosting.Status = PostStatus.Declined;
+                    return NotFound();
                 }
                 // get user's till and do the necessary calculation
                 tellerPosting.UserId = userId;
@@ -101,7 +80,7 @@ namespace ChealCore.Controllers
 
                 //tellerPosting.UserId = tellerId;
 
-                tellerPosting.Date = DateTime.Now;
+                tellerPosting.Date = DateTime.UtcNow;
 
                 var amt = tellerPosting.Amount;
 
@@ -112,7 +91,7 @@ namespace ChealCore.Controllers
                         if (!((decimal)tillAcct.AccountBalance >= amt))
                         {
                             Problem("Insufficient funds in till account");
-                            tellerPosting.Status = PostStatus.Declined;
+                            return View("NotFound");
                         }
                         tellerPosting.Status = PostStatus.Approved;
 
@@ -120,7 +99,7 @@ namespace ChealCore.Controllers
                         if (!result.Equals("success"))
                         {
                             Problem(result);
-                            tellerPosting.Status = PostStatus.Declined;
+                            return View("NotFound");
                         }
 
                         _context.Entry(custAcct).State = EntityState.Modified;
@@ -132,7 +111,7 @@ namespace ChealCore.Controllers
                     else
                     {
                         Problem("Insufficient funds in customer account");
-                        tellerPosting.Status = PostStatus.Declined;
+                        return View("NotFound");
                     }
 
                 }
@@ -164,6 +143,7 @@ namespace ChealCore.Controllers
             return View(tellerPosting);
         }
 
+     
         private bool TellerPostingExists(int id)
         {
             return (_context.TellerPosting?.Any(e => e.ID == id)).GetValueOrDefault();
@@ -172,6 +152,39 @@ namespace ChealCore.Controllers
         [HttpGet]
         public IActionResult VerifyCustomer()
         {
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> VerifyCustomer(VerifyCustomerViewModel verifyCustomerViewModel)
+        {
+            try
+            {
+                var acctNum = _context.CustomerAccount.Where(a => a.AccountNumber == verifyCustomerViewModel.AccountNumber).First();
+                if (acctNum != null)
+                {
+
+
+                    ViewBag.AccountName = acctNum.AccountName;
+                    ViewBag.AccountType = acctNum.Accounttype;
+                    ViewBag.AccountNumber = acctNum.AccountNumber;
+                    ViewBag.CustomerId = acctNum.CustomerID;
+                    ViewBag.DateOpened = acctNum.DateOpened;
+                    ViewBag.AccountBalance = acctNum.AccountBalance;
+                    ViewBag.IsActivated = acctNum.IsActivated;
+
+
+                    return View(verifyCustomerViewModel);
+                }
+
+            }
+            catch
+            {
+                return View();
+            }
+
             return View();
         }
 
